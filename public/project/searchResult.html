@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="UrbanAppetizerApp">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+    <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/oauth-signature.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>-->
+
+
+    <title>Urban-Appetizer</title>
+</head>
+<body>
+<div class="container">
+    <h1> Search restuarant</h1>
+    <!--<input id="name enter" class="form-control" placeholder="Restuarant Name"/>-->
+    <!--<button id="searchMovie"class ="btn btn-primary btn-block">Search Restuarant</button>-->
+
+
+    <table class="table" ng-controller="RestuarantListController">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>RatingImage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="restuarant in restuarants">
+            <td><img ng-src={{restuarant.image_url}} alt="Description" /></td>
+            <td>{{restuarant.id}}</td>
+            <td>{{restuarant.name}}</td>
+            <td>{{restuarant.rating}}</td>
+            <td><img ng-src={{restuarant.rating_img_url}} alt="Description" /></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
