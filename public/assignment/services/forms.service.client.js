@@ -49,11 +49,13 @@
         }
 
         function deleteFormById(formId, callback){
-
-            forms = forms.filter( function(form){
-                return form._id != formId;
-            });
-            callback(forms);
+            for(var i in forms){
+                if(formId == forms[i]._id){
+                    forms.splice(i, 1);
+                    callback(forms);
+                    return;
+                }
+            }
         }
 
         function updateFormById(formId, newForm, callback){
@@ -65,7 +67,6 @@
                             title : newForm.title,
                             userId : newForm.userId
                         };
-
                         callback(forms[i]);
                         return;
                     }
@@ -91,6 +92,4 @@
             return forms;
         }
     }
-
-
 })();

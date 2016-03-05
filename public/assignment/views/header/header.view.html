@@ -13,7 +13,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li ng-hide = "currentUser"><a href="#/register">Register</a></li>
                 <li ng-hide = "currentUser"><a href="#/login">Login</a></li>
-                <li ng-hide = "currentUser"><a href="#/profile">{{currentUser.username}}</a></li>
+                <li ng-show = "currentUser"><a href="#/profile">{{currentUser.username}}</a></li>
                 <li ng-show = "currentUser"><a ng-click = logout()>Logout</a></li>
                 <li ng-show = "currentUser.roles.indexOf('admin') >= 0"><a href="#/admin">Admin</a>
             </ul>x

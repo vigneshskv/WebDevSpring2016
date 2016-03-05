@@ -26,33 +26,30 @@
             createUser: createUser,
             deleteUserById: deleteUserById,
             updateUser: updateUser,
-            userExists: userExists,
+
+            userExists: checkIfUserExists,
             setUser: setUser,
             getUser: getUser,
             findUserbyId: findUserbyId,
             checkLoggedIn: checkLoggedIn,
-            checkUserAdmin: checkUserAdmin
+            checkUserAdmin: checkUserAdmin,
+            findUserByUsername : findUserByUsername
 
         };
 
         return userService;
 
         function findUserByCredentials(username, password, callback) {
-
+            var userFound=null;
             for (var i in users){
-                if(users[i].username == username && users[i].password == password)
-                    callback(users[i]);
-            }
-            callback(null);
-        }
-
-        function findUserbyId(userId){
-            for(var i in users){
-                if(users[i]._id == userId){
-                    return users[i];
+                if(users[i].username == username && users[i].password == password){
+                    userFound=users[i];
+                    console.log("user found: "+username+"\"+password");
+                    break;
+                    //callback(users[i]);
                 }
             }
-            return null;
+            callback(userFound);
         }
 
         function findAllUsers(callback) {
@@ -60,55 +57,67 @@
         }
 
         function createUser(user, callback){
-
             var newUser = {
                 _id : (new Date).getTime(),
                 username :  user.username,
                 password : user.password,
                 email: user.email
-
             };
             users.push(newUser);
-            console.log(users);
             callback(newUser);
         }
 
         function deleteUserById(userId, callback){
-            for(var i in users){
+            for(var i=0; i<users.length; i++){
                 if(users[i]._id == userId){
-                    users.pop(users[i]);
+                    users.splice(i,1);
                     callback(users);
+                    break;
                 }
             }
         }
 
         function updateUser(userId, user, callback){
-            var currentUser = findUserbyId(userId);
-            console.log(currentUser + "inside updateUser");
-            console.log(currentUser);
-
-            if(currentUser != null){
-                $.extend(true,currentUser,{
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    username: user.username,
-                    password: user.password,
-                    email:user.email
-                });
-                callback(currentUser);
+            var i;
+            for(i=0;i<users.length;i++)
+            {
+                if(users[i]._id===userId)
+                {
+                    users[i] = user;
+                    console.log(users[i]);
+                    console.log(users);
+                    break;
+                }
             }
-
-            callback(null);
+            callback(users[i]);
         }
 
-        function userExists(userName){
-            for(var i in users){
+        // Auxilary Functions
+        function findUserbyId(userId){
+            for(var i=0; i<users.length; i++){
+                if(users[i]._id == userId){
+                    return users[i];
+                }
+            }
+            return null;
+        }
+
+        function checkIfUserExists(userName){
+            for(var i=0; i<users.length; i++){
                 if(users[i].username == userName){
-                    console.log(users[i].username );
                     return true;
                 }
             }
             return false;
+        }
+
+        function findUserByUsername (username) {
+            for (var u in users) {
+                if (users[u].username === username) {
+                    return users[u];
+                }
+            }
+            return null;
         }
 
         function checkLoggedIn(){
@@ -125,13 +134,10 @@
 
         function setUser(user){
             $rootScope.currentUser = user;
-            // console.log("inside setUser "+ $rootScope.currentUser._id);
         }
 
         function getUser(){
             return $rootScope.currentUser;
         }
-
-
     }
 })();
