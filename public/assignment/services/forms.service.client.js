@@ -1,3 +1,4 @@
+"use strict";
 (function(){
 
     angular
@@ -22,7 +23,6 @@
         };
 
         return formService;
-
 
         function createFormForUser(userId, form, callback){
             if (form != null && form.title != ""){
@@ -62,11 +62,7 @@
             if(newForm.title != ""){
                 for (var i in forms){
                     if(forms[i]._id === formId){
-                        forms[i] ={
-                            _id : newForm._id,
-                            title : newForm.title,
-                            userId : newForm.userId
-                        };
+                        forms[i] =newForm;
                         callback(forms[i]);
                         return;
                     }

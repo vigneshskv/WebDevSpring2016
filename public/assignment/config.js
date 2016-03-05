@@ -1,3 +1,4 @@
+"use strict";
 (function(){
     angular
         .module("FormBuilderApp")
@@ -33,7 +34,6 @@
                 templateUrl: "views/forms/form-fields.view.html",
                 controller: "FieldsController"
             })
-
 
             .otherwise({
                 redirectTo: "/"
