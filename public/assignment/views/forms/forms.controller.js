@@ -8,7 +8,6 @@
     function FormController($scope, $location, UserService, FormService) {
         UserService.checkLoggedIn();
 
-        $scope.forms = FormService.getCurrentForms();
         $scope.error = null;
         $scope.selectedForm = null;
         $scope.addForm=addForm;
@@ -17,6 +16,7 @@
         $scope.selectForm=selectForm;
 
         $scope.user = UserService.getUser();
+        $scope.forms = FormService.findUserForm($scope.user._id);
 
         function addForm(form){
             var newForm = function (form){
