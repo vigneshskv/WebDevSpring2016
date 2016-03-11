@@ -87,12 +87,13 @@
             params: params
         }).success(function(response) {
 
-            deferred.resolve(response);
+            //deferred.resolve(response);
+            $scope.restuarantsDetail = response.businesses;
 
 
         }).error(function(response) {
 
-            deferred.resolve(response);
+            //deferred.resolve(response);
 
         });
         //return deferred.promise;
