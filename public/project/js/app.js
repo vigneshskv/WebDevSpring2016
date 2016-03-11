@@ -56,14 +56,7 @@
 
     function searchByBusinessId(bid)
     {
-
-        ////console.log("Here..........");
-
         var deferred=$q.defer();
-
-
-
-
         var method = "GET";
         var url = "https://api.yelp.com/v2/business/"+bid+"?callback=JSON_CALLBACK";
 
@@ -71,8 +64,8 @@
         var params = {
             callback: 'angular.callbacks._0',
 
-            oauth_consumer_key: 'VuklhoLZCMZlHoioieLPew',
-            oauth_token: 'wx2QaMJoVlkngzuh5EavVI0FNyhtBRUF',
+            oauth_consumer_key: 'LRhQe7B3E8aZX7958OhD9w',
+            oauth_token: '1Jhbrejc0L5lWRbpvgzlBW3ed_6d346K',
             oauth_signature_method: "HMAC-SHA1",
             oauth_timestamp: new Date().getTime(),
             oauth_nonce: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
@@ -81,8 +74,8 @@
 
 
         };
-        var consumerSecret = 'HrqvdDlChpNaOyobojXUTAR8Sus';
-        var tokenSecret = 'DxAev56PBQ8KTrnkPbQ_mleWEUs';
+        var consumerSecret = 'E6mupcRB0ew2vPTDQIHkoNjDEH8';
+        var tokenSecret = 'zAEdXwfPq8U_EHmwTQyhHPbzLn8';
         var signature = oauthSignature.generate(method, url, params, consumerSecret, tokenSecret, {
             encodeSignature: false
         });
