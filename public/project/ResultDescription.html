@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="UrbanAppetizerApp">
+<html lang="en" ng-app="vignesh">
 <head>
     <meta charset="UTF-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
 
-
+    <link href="css/style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/app1.js"></script>
     <script src="js/oauth-signature.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>-->
 
@@ -18,19 +18,41 @@
     <title>Urban-Appetizer</title>
 </head>
 <body>
-<div margin="0px" padding="0px" height="20px";>
-    <img src="http://www.wallpapereast.com/static/images/001_Fish-Wallpaper-HD_hkNsK33.jpg" height="10%" width="auto%">
-</div>
-
 <div class="container">
-    <div  class="row">
-        <div class="span12" style="color:#0000FF">
 
-        </div>
+    <!--<input id="name enter" class="form-control" placeholder="Restuarant Name"/>-->
+    <!--<button id="searchMovie"class ="btn btn-primary btn-block">Search Restuarant</button>-->
 
-    </div>
-    <h1> Search restuarant Detials</h1>
 
+
+    <table class="table" ng-controller="searchByBusinessId">
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Id</th>
+            <th>Image</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>RatingImage</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{restuarantsDetail.categories[0][0]}}</td>
+            <td>{{restuarantsDetail.id}}</td>
+            <td><img ng-src={{restuarantsDetail.image_url}} alt="Description" /></td>
+            <td>{{restuarantsDetail.location.display_address}}</td>
+            <td>{{restuarantsDetail.phone}}</td>
+            <td><img ng-src={{restuarantsDetail.rating_img_url}} alt="Description" /></td>
+            <td>{{restuarantsDetail.snippet_text}}</td>
+        </tr>
+
+        </tbody>
+
+
+
+    </table>
 </div>
 </body>
 </html>

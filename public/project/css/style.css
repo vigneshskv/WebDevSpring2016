@@ -1,9 +1,22 @@
-.banner {
+.restaurant-header {
+    height: 750px;
+    padding-bottom: 20px;
+    overflow:hidden;
+    opacity: 0.6;
+}
+
+.restaurant-header-img {
+    height:750px;
+    width:100%;
+    opacity: 0.6;
+    position: relative
+}
+
+.restaurant-header-img-title {
+    position: absolute;
+    left: 0;
+    top: 50%;
     width: 100%;
-    height: auto;
-    min-height: 100px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+    text-align: center;
+    font-size: 48px;
 }

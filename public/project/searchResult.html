@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
 
-
+    <link href="css/style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
@@ -19,6 +19,7 @@
 </head>
 <body>
 <div class="container">
+
     <h1> Search restuarant</h1>
     <!--<input id="name enter" class="form-control" placeholder="Restuarant Name"/>-->
     <!--<button id="searchMovie"class ="btn btn-primary btn-block">Search Restuarant</button>-->
@@ -41,6 +42,38 @@
             <td>{{restuarant.name}}</td>
             <td>{{restuarant.rating}}</td>
             <td><img ng-src={{restuarant.rating_img_url}} alt="Description" /></td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail3">Id</label>
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="ID">
+                    </div>
+                </form>
+            </td>
+            <td>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail3">Name</label>
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Name">
+                    </div>
+                </form>
+            </td>
+            <td>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail3">Rating</label>
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Rating">
+                    </div>
+                </form>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success">Add</button>
+                <button type="button" class="btn btn-primary">Update</button>
+            </td>
         </tr>
         </tbody>
     </table>
