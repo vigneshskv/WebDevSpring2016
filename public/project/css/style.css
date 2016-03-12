@@ -20,3 +20,7 @@
     text-align: center;
     font-size: 48px;
 }
+
+table tr td {
+    white-space: nowrap;
+}
