@@ -57,31 +57,24 @@ module.exports = function(app) {
     }
 
     function findUserById(userId){
-        for(var i in users){
-            if(users[i]._id == userId){
+        for(var i in users)
+            if(users[i]._id == userId)
                 return users[i];
-            }
-        }
         return null;
     }
 
 
     function findUserByUsername(userName){
-        for(var i in users){
-            if(users[i].username == userName){
+        for(var i in users)
+            if(users[i].username == userName)
                 return users[i];
-            }
-        }
         return null;
     }
 
     function findUserByCredentials(credentials){
-        for (var i in users){
-            if(users[i].username == credentials.username &&
-                users[i].password == credentials.password){
+        for (var i in users)
+            if(users[i].username == credentials.username && users[i].password == credentials.password)
                 return users[i];
-            }
-        }
         return null;
     }
 };
