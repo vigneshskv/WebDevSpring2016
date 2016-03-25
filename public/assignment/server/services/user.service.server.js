@@ -1,69 +1,47 @@
 module.exports = function (app, userModel){
-
     app.post("/api/assignment/user",createUser);
-    app.get("/api/assignment/user",findAllUsers);
+    app.get("/api/assignment/user",findUser);
     app.get("/api/assignment/user/:id",findUserById);
-    app.get("/api/assignment/user?username=username",findUserByUsername);
-    app.get("/api/assignment/user?username=alice&password=wonderland",findUserByCredentials);
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
 
-    function createUser(req,res){
-        var newUsers = userModel.createUser(req.body);
-        res.json(newUsers);
+    function createUser(request,result){
+        var newUsers = userModel.createUser(request.body);
+        result.json(newUsers);
     }
 
-    function updateUser(req,res){
-        var updatedUsers = userModel.updateUser(req.body,req.params.id);
-        if (updatedUsers != null){
-            res.json(updatedUsers);
+    function updateUser(request,result){
+        var updatedUser = userModel.updateUser(request.body,request.params.id);
+        result.json(updatedUser);
+    }
+
+    function deleteUser(request,result){
+        var users = userModel.deleteUser(request.params.id);
+        result.json(users);
+    }
+
+    function findUserById(request,result){
+        var user = userModel.findUserById(request.params.id);
+        result.json(user);
+    }
+
+    function findUser(request,result){
+        var userName = request.query.username;
+        var password = request.query.password;
+        var user = null;
+        if (userName != null && password != null){
+            var credentials = {username : userName, password : password};
+            user = userModel.findUserByCredentials(credentials);
+            result.json(user);
         }
-        else{
-            res.json({message: "Cannot Update"});
+        if(userName!=null && password == null){
+            user = userModel.findUserByUsername(userName);
+            result.json(user);
         }
-    }
-
-    function deleteUser(req,res){
-        var users = userModel.deleteUser(req.params.id);
-        if(users != null){
-            res.json(users);
+        if(userName ==null && password == null){
+            var users = userModel.findAllUsers();
+            result.json(users);
         }
-        else{
-            res.json({message: "Cannot Delete"});
-        }
-    }
-
-    function userResponse(user){
-        if(user != null){
-            res.json(user);
-        }
-        else{
-            res.json({message: "Cannot find user"});
-        }
-    }
-
-    function findUserById(req,res){
-        var user = userModel.findUserById(req.params.id);
-        userResponse(user);
-    }
-
-    function findAllUsers(req,res){
-        var users = userModel.findAllUsers();
-        res.json(users);
-    }
-
-    function findUserByUsername(req,res){
-        var userName = req.query.username;
-        var user = userModel.findUserByUsername(userName);
-        userResponse(user);
-    }
-
-    function findUserByCredentials(req,res){
-        var userName = req.query.username;
-        var password = req.query.password;
-        var credentials = {username : userName, password : password};
-        var user = userModel.findUserByCredentials(credentials);
-        userResponse(user);
     }
 };
