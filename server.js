@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
-
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // Given any URL, first try to match for routes, if none match then go into /public directory and match physical file
 // no pattern match inside /public directory, only match physical files
 // index.html is a special case, so even if no file specifically mentioned, it gives index.html = default
@@ -14,3 +16,4 @@ app.get('/hello', function(req, res){
 });
 
 app.listen(port, ipaddress);
+require("./public/assignment/server/app.js")(app);

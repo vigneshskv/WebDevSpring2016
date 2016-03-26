@@ -1,6 +1,4 @@
-
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller = "FormController">
-
     <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
     <h1 class="page-header">Forms</h1>
     <ul class="nav nav-tabs">
@@ -26,7 +24,7 @@
                 </td>
             </tr>
             <tr ng-repeat="form in forms">
-                <td><a href="fields.view.html" >{{form.title}}</a></td>
+                <td><a href="#/form/{{form._id}}/fields" >{{form.title}}</a></td>
                 <td>
                     <a ng-click="deleteForm($index)"><span  class="glyphicon glyphicon-remove"></span></a>
                     <a ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -36,5 +34,3 @@
         </table>
     </div>
 </div>
-
-

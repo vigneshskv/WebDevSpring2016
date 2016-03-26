@@ -5,8 +5,7 @@
         .module("FormBuilderApp")
         .controller("FieldController", FieldController);
 
-    function FieldController($scope,$rootScope, FormService, FieldService,$routeParams){
-
+    function FieldController($scope,$rootScope, FormService,FieldService,$routeParams){
         var userId = $rootScope.currentUser._id;
         var formId = $routeParams.formId;
 
@@ -18,17 +17,14 @@
 
                 });
 
-        //Setting the form fields
         FieldService.getFieldsForForm(formId)
             .then(function (formFields){
                     $scope.fields = formFields.data;
-                    console.log($scope.fields);
                 },
                 function(err){
 
                 });
 
-        // Functions
         $scope.addField=addField;
         $scope.removeField=removeField;
         $scope.updateField=updateField;
@@ -71,30 +67,17 @@
 
                         });
             }
-            console.log(fieldTypes[fieldTypeIndex]);
         }
 
         function removeField(field){
             FieldService.deleteFieldFromForm(formId,field._id)
                 .then(function (userFields){
                         $scope.fields = userFields.data;
-                        console.log($scope.fields);
                     },
                     function (err){
 
                     });
         }
-
-        //function updateField(field){
-        //    FieldService.updateField(formId,field._id,field)
-        //        .then(function (userFields){
-        //                $scope.fields =userFields.data;
-        //                console.log($scope.fields);
-        //            },
-        //            function (err){
-        //
-        //            })
-        //}
 
         function showField(formField){
             var field = formField;
@@ -107,15 +90,12 @@
             var modaloptions=[];
             var optionsLocal = field.options;
             if(field.type == "OPTIONS" || field.type== "CHECKBOXES" || field.type== "RADIOS"){
-
                 for(var i in optionsLocal){
                     var option = optionsLocal[i].label+ ":"+optionsLocal[i].value+"\n";
                     modaloptions.push(option);
-
                 }
                 fieldLocal.options = modaloptions.join("");
             }
-
             $scope.modal = fieldLocal;
         }
 

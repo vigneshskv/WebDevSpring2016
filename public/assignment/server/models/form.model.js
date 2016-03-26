@@ -49,7 +49,7 @@ module.exports = function (){
     }
 
     function createForm(form, userId){
-        if (form != null && form.title != ""){
+        if (!form){
             var newForm = {
                 _id : newFormId.v1(),
                 title: form.title,
@@ -137,6 +137,7 @@ module.exports = function (){
     }
 
     function updateField(formId,fieldId,field){
+        console.log(field)
         for (var i in forms) {
             if (forms[i]._id == formId) {
                 for (var j in forms[i].fields){

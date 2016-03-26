@@ -16,7 +16,6 @@
         $scope.selectForm=selectForm;
 
         $scope.user = UserService.getUser();
-        //$scope.forms = FormService.findUserForm($scope.user._id);
 
         FormService.findUserForms($scope.user._id)
             .then(function(forms){
@@ -28,12 +27,17 @@
 
         function addForm(form){
             FormService.createFormForUser($scope.user._id, form)
-                .then(function (userForms){
-                        $scope.forms = userForms.data;
-                        $scope.error = null;
+                .then(function (userForms) {
+                        if (userForms.data != null) {
+                            $scope.forms = userForms.data;
+                            $scope.error = null;
+                        }
+                        else {
+                            $scope.error = "Please enter Form name- Form name cannot be empty";
+                        }
                     },
                     function (err){
-                        $scope.error = "No Forms";
+                        $scope.error = "No valid Forms";
                     });
         }
 
@@ -46,16 +50,16 @@
 
             FormService.updateFormById(formUpdated._id, form)
                 .then(function(userForms){
-                        if(userForms != null){
+                        if(userForms.data != null){
                             $scope.forms = userForms.data;
                             $scope.error = null;
                         }
                         else{
-                            $scope.error = "Form name cannot be empty";
+                            $scope.error = "Please enter Form name- Form name cannot be empty";
                         }
                     },
                     function(err){
-                        scope.error = "Cannot Update";
+                        scope.error = "Cannot Update the Form";
                     });
         }
 
@@ -67,11 +71,11 @@
                             $scope.error = null;
                         }
                         else{
-                            $scope.error = "Form Not Present";
+                            $scope.error = "Form doesnot exists";
                         }
                     },
                     function(err){
-                        scope.error = "Cannot Delete";
+                        scope.error = "Cannot delete the Form";
                     });
         }
 

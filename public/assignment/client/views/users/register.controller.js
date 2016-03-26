@@ -6,15 +6,11 @@
         .controller("RegisterController", RegisterController);
 
     function RegisterController($scope, $location, UserService ) {
-
-
         $scope.message = null;
         $scope.register = register;
 
         function register(user){
-
             var userName = user.username;
-
             UserService.findUserByUsername(userName)
                 .then(function (userPresent){
                         if(userPresent.data == null) {
@@ -26,21 +22,19 @@
                                                     $location.url("/profile");
                                                 },
                                                 function (err){
-                                                    $scope.message = "Cannot register";
+                                                    $scope.message = "Unable to  register";
                                                 });
                                     },
                                     function (err){
-                                        $scope.message = "Cannot register";
+                                        $scope.message = "Unable to register";
                                     });
                         }else{
-                            $scope.message = "Username Already Exists";
+                            $scope.message = "Duplicate Username: User already exists";
                         }
                     },
                     function(err){
 
                     });
         }
-
-
     }
 })();

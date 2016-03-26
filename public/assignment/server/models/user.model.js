@@ -13,9 +13,7 @@ module.exports = function(app) {
 
     return api;
 
-    // creates a new user JSON object and adds to existing users list
     function createUser(user){
-        //create new JSON object of given user details
         var newUser = {
             _id : (new Date).getTime(),
             username :  user.username,

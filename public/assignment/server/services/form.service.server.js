@@ -21,7 +21,7 @@ module.exports = function (app, formModel){
     }
 
     function createForm(request,result){
-        var newForms = formModel.createForm(req.body, request.params.userId);
+        var newForms = formModel.createForm(request.body, request.params.userId);
         result.json(newForms);
     }
 
