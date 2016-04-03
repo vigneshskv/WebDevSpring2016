@@ -18,6 +18,7 @@ module.exports = function (app, formModel){
     function getFieldForForm(request,result){
         var field = formModel.getFieldForForm(request.params.formId,request.params.fieldId);
         result.json(field);
+        //result.json(field);
     }
 
     function deleteFieldFromForm(request,result){
