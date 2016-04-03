@@ -14,6 +14,7 @@ module.exports = function(app) {
     return api;
 
     function createUser(user){
+        console.log(user);
         var newUser = {
             _id : (new Date).getTime(),
             username :  user.username,
