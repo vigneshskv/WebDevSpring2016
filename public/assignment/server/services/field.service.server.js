@@ -1,33 +1,64 @@
-module.exports = function (app, formModel){
+module.exports = function (app, fieldModel){
+
     app.post("/api/assignment/form/:formId/field",createFieldForForm);
     app.get("/api/assignment/form/:formId/field",getFieldsForForm);
     app.get("/api/assignment/form/:formId/field/:fieldId",getFieldForForm);
     app.delete("/api/assignment/form/:formId/field/:fieldId",deleteFieldFromForm);
     app.put("/api/assignment/form/:formId/field/:fieldId",updateField);
 
-    function createFieldForForm(request,result){
-        var fields = formModel.createFieldForForm(request.params.formId,request.body);
-        result.json(fields);
+    function createFieldForForm(req,res){
+        fieldModel.createFieldForForm(req.params.formId,req.body)
+            .then( function(fields){
+                    res.json(fields);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    function getFieldsForForm(request,result){
-        var fields = formModel.getFieldsForForm(request.params.formId);
-        result.json(fields);
+    function getFieldsForForm(req,res){
+        fieldModel.getFieldsForForm(req.params.formId)
+            .then(function(fields){
+                    res.json(fields);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    function getFieldForForm(request,result){
-        var field = formModel.getFieldForForm(request.params.formId,request.params.fieldId);
-        result.json(field);
-        //result.json(field);
+    function getFieldForForm(req,res){
+        fieldModel.getFieldForForm(req.params.formId,req.params.fieldId)
+            .then(function(field){
+                    res.json(field);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    function deleteFieldFromForm(request,result){
-        var forms = formModel.deleteFieldFromForm(request.params.formId,request.params.fieldId);
-        result.json(forms);
+    function deleteFieldFromForm(req,res){
+        fieldModel.deleteFieldFromForm(req.params.formId,req.params.fieldId)
+            .then(function(field){
+                    res.json(field);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    function updateField(request,result){
-        var forms = formModel.updateField(request.params.formId,request.params.fieldId,request.body);
-        result.json(forms);
+    function updateField(req,res){
+        fieldModel.updateField(req.params.formId,req.params.fieldId,req.body)
+            .then(function(field){
+                    res.json(field);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
+
 };

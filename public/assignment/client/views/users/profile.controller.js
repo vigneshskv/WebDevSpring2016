@@ -5,13 +5,16 @@
         .module("FormBuilderApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController ($scope, $location, $rootScope, UserService) {
+    function ProfileController ($scope, $rootScope, UserService) {
+
+        //console.log($rootScope.currentUser.username + " inside profile controller");
         UserService.checkLoggedIn();
 
         $scope.user = UserService.getUser();
         $scope.update = update;
 
         function update(user){
+
             UserService.updateUser( $rootScope.currentUser._id, user)
                 .then(
                     function (updatedUser){
@@ -27,6 +30,7 @@
                     function (error){
                         $scope.message = "Cannot update User";
                     });
+
         }
     }
 })();

@@ -25,8 +25,16 @@
   "dependencies": {
     "angular-ui-sortable": "^0.13.4",
     "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
     "express": "^3.4.8",
-    "node-uuid": "^1.4.7"
+    "express-session": "^1.13.0",
+    "mongoose": "^4.4.11",
+    "multer": "^1.1.0",
+    "node-uuid": "^1.4.7",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "q": "^1.4.1",
+    "request": "^2.69.0"
   },
   "devDependencies": {},
   "bundleDependencies": [],

@@ -1,5 +1,9 @@
-module.exports = function(app) {
+var q = require("q");
+
+module.exports = function(db,mongoose) {
     var users = require("./user.mock.json");
+    var UserSchema = require("./user.schema.server.js")(mongoose);
+    var UserModel = mongoose.model('user',UserSchema);
 
     var api = {
         createUser:createUser,
@@ -14,30 +18,39 @@ module.exports = function(app) {
     return api;
 
     function createUser(user){
-        console.log(user);
-        var newUser = {
-            _id : (new Date).getTime(),
-            username :  user.username,
-            password : user.password,
-            email: user.email
-        };
-        // add temporary user to userlist
-        users.push(newUser);
-        return users;
+        var deferred = q.defer();
+
+        UserModel.create(user, function (err, doc) {
+            if(err)
+                deferred.reject(err);
+            else
+                deferred.resolve(doc);
+        });
+        return deferred.promise;
     }
 
     function updateUser(user, userId){
-        for(var i in users){
-            if(users[i]._id == userId){
-                users[i].firstName = user.firstName;
-                users[i].lastName = user.lastName;
-                users[i].username = user.username;
-                users[i].password = user.password;
-                users[i].email = user.email;
-                return users[i];
+        var deferred = q.defer();
+
+        UserModel.findById({_id:userId}, function(err,userFound){
+            if(err)
+                deferred.reject(err);
+            else{
+                userFound.username = user.username;
+                userFound.firstName = user.firstName;
+                userFound.lastName = user.lastName;
+                userFound.password = user.password;
+                userFound.email = user.email;
+                userFound.phones = user.phones;
+                userFound.save(function(err,userUpdated){
+                    if(err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(userUpdated);
+                });
             }
-        }
-        return null;
+        });
+        return deferred.promise;
     }
 
     function deleteUser(userId){
@@ -46,9 +59,8 @@ module.exports = function(app) {
             users.splice(user,1);
             return users;
         }
-        else{
+        else
             return null;
-        }
     }
 
     function findAllUsers(){
@@ -64,16 +76,33 @@ module.exports = function(app) {
 
 
     function findUserByUsername(userName){
-        for(var i in users)
-            if(users[i].username == userName)
-                return users[i];
-        return null;
+        var deferred = q.defer();
+
+        UserModel.findOne(
+            {username: userName},
+
+            function(err, doc) {
+                if (err)
+                    deferred.reject(err);
+                else
+                    deferred.resolve(doc);
+            });
+        return deferred.promise;
     }
 
     function findUserByCredentials(credentials){
-        for (var i in users)
-            if(users[i].username == credentials.username && users[i].password == credentials.password)
-                return users[i];
-        return null;
+        var deferred = q.defer();
+        UserModel.findOne(
+
+            { username: credentials.username,
+                password: credentials.password },
+
+            function(err, doc) {
+                if (err)
+                    deferred.reject(err);
+                else
+                    deferred.resolve(doc);
+            });
+        return deferred.promise;
     }
 };

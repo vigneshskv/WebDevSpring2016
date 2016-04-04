@@ -1,32 +1,76 @@
 module.exports = function (app, formModel){
+
     app.get("/api/assignment/user/:userId/form", findFormByUserId);
     app.get("/api/assignment/form/:formId", findFormById);
     app.delete("/api/assignment/form/:formId", deleteFormById);
     app.post("/api/assignment/user/:userId/form", createForm);
     app.put("/api/assignment/form/:formId", updateFormById);
 
-    function findFormByUserId(request,result){
-        var forms = formModel.findFormByUserId(request.params.userId);
-        result.json(forms);
+
+    function findFormByUserId(req,res){
+        console.log("Inside webservice");
+        formModel.findFormByUserId(req.params.userId)
+            .then(function(forms){
+                    res.json(forms);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+
     }
 
-    function findFormById(request,result){
-        var form = formModel.findFormById(request.params.formId);
-        result.json(form)
+    function findFormById(req,res){
+        formModel.findFormById(req.params.formId)
+            .then( function(form){
+                    res.json(form);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+
     }
 
-    function deleteFormById(request,result){
-        var forms = formModel.deleteFormById(request.params.formId);
-        result.json(forms);
+    function deleteFormById(req,res){
+        formModel.deleteFormById(req.params.formId)
+            .then( function(form){
+                    res.json(form);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    function createForm(request,result){
-        var newForms = formModel.createForm(request.body, request.params.userId);
-        result.json(newForms);
+    function createForm(req,res){
+        formModel.createForm(req.body, req.params.userId)
+            .then( function(form){
+                    res.json(form);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    function updateFormById(request,result){
-        var forms = formModel.updateFormById(request.body, request.params.formId);
-        result.json(forms);
+    function updateFormById(req,res){
+        formModel.updateFormById(req.body, req.params.formId)
+            .then(function (updatedForm){
+                    res.json(updatedForm);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
+
+    //function formResponse(form){
+    //    if(form != null){
+    //        res.json(form);
+    //    }
+    //    else{
+    //        res.json({message: "Cannot find form"});
+    //    }
+    //}
+
 };
