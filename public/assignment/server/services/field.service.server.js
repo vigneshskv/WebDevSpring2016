@@ -1,5 +1,6 @@
-module.exports = function (app, fieldModel){
+"use strict";
 
+module.exports = function (app, fieldModel){
     app.post("/api/assignment/form/:formId/field",createFieldForForm);
     app.get("/api/assignment/form/:formId/field",getFieldsForForm);
     app.get("/api/assignment/form/:formId/field/:fieldId",getFieldForForm);
@@ -60,5 +61,4 @@ module.exports = function (app, fieldModel){
                 }
             );
     }
-
 };

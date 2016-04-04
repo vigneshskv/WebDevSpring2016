@@ -1,27 +1,22 @@
-module.exports = function (app, userModel){
+"use strict";
 
+module.exports = function (app, userModel){
     app.post("/api/assignment/user",createUser);
     app.get("/api/assignment/user",findUser);
     app.get("/api/assignment/user/:id",findUserById);
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
-
     function createUser(req,res){
         var user = req.body;
-        console.log("req body in web service:"+JSON.stringify(req.body));
         userModel.createUser(user)
             .then(
                 function (doc) {
-                    console.log("Inside user web service");
-                    console.log(JSON.stringify(doc));
-                    //req.session.currentUser = doc;
                     res.json(doc);
                 },
                 function ( err ) {
                     res.status(400).send(err);
                 });
-
     }
 
     function updateUser(req,res){
@@ -62,16 +57,10 @@ module.exports = function (app, userModel){
         }
         if(userName!=null && password == null){
             userModel.findUserByUsername(userName)
-                //res.json(user);
-                // handle model promise
                 .then(
-                    // login user if promise resolved
                     function(doc) {
-                        console.log("Inside user web service findByUsername");
-                        console.log(JSON.stringify(doc));
                         res.json(doc);
                     },
-                    // send error if promise rejected
                     function ( err ) {
                         res.status(400).send(err);
                     });
@@ -81,6 +70,4 @@ module.exports = function (app, userModel){
             res.json(users);
         }
     }
-
-
 };

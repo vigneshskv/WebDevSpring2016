@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = function (app,db,mongoose){
     var FormSchema = require("./models/form.schema.server.js")(mongoose);
     var FieldSchema = require("./models/field.schema.server.js")(mongoose);

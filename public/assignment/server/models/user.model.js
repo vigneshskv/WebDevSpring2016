@@ -1,7 +1,7 @@
+"use strict";
 var q = require("q");
 
 module.exports = function(db,mongoose) {
-    var users = require("./user.mock.json");
     var UserSchema = require("./user.schema.server.js")(mongoose);
     var UserModel = mongoose.model('user',UserSchema);
 
@@ -16,6 +16,21 @@ module.exports = function(db,mongoose) {
     };
 
     return api;
+
+    function findUserByUsername(userName){
+        var deferred = q.defer();
+
+        UserModel.findOne(
+            {username: userName},
+
+            function(err, doc) {
+                if (err)
+                    deferred.reject(err);
+                else
+                    deferred.resolve(doc);
+            });
+        return deferred.promise;
+    }
 
     function createUser(user){
         var deferred = q.defer();
@@ -53,6 +68,10 @@ module.exports = function(db,mongoose) {
         return deferred.promise;
     }
 
+    function findAllUsers(){
+        return users;
+    }
+
     function deleteUser(userId){
         var user = findUserById(userId);
         if(user != null){
@@ -63,31 +82,11 @@ module.exports = function(db,mongoose) {
             return null;
     }
 
-    function findAllUsers(){
-        return users;
-    }
-
     function findUserById(userId){
         for(var i in users)
             if(users[i]._id == userId)
                 return users[i];
         return null;
-    }
-
-
-    function findUserByUsername(userName){
-        var deferred = q.defer();
-
-        UserModel.findOne(
-            {username: userName},
-
-            function(err, doc) {
-                if (err)
-                    deferred.reject(err);
-                else
-                    deferred.resolve(doc);
-            });
-        return deferred.promise;
     }
 
     function findUserByCredentials(credentials){

@@ -1,3 +1,4 @@
+"use strict";
 module.exports = function (db,mongoose,FormModel,FieldModel){
     var q = require('q');
     var newFieldId = require('node-uuid');
@@ -11,47 +12,6 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
     };
 
     return api;
-
-    function createFieldForForm(formId,field){
-        var deferred = q.defer();
-        var newField = {
-            type:field.type,
-            placeholder:field.placeholder,
-            label:field.label,
-            options:field.options};
-
-        FieldModel.create(newField, function(err,field){
-            if(!err){
-                FormModel.findById(formId)
-                    .then(function (form) {
-                        form.fields.push(newField);
-                        form.save(function(err,newForm){
-                            if(err){
-                                deferred.reject(err);
-                            }else{
-                                deferred.resolve(newForm.fields);
-                            }
-                        })
-
-                    }, function (err){
-                        deferred.reject(err);
-                    });
-            }
-        });
-        return deferred.promise;
-    }
-
-    function getFieldsForForm(formId){
-        var deferred = q.defer();
-        FormModel.findById(formId,
-            function(err,form){
-                if(err)
-                    deferred.reject(err);
-                else
-                    deferred.resolve(form.fields);
-            });
-        return deferred.promise;
-    }
 
     function getFieldForForm(formId,fieldId){
         var deferred = q.defer();
@@ -84,6 +44,34 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
         return deferred.promise;
     }
 
+    function createFieldForForm(formId,field){
+        var deferred = q.defer();
+        var newField = {
+            type:field.type,
+            placeholder:field.placeholder,
+            label:field.label,
+            options:field.options};
+
+        FieldModel.create(newField, function(err,field){
+            if(!err){
+                FormModel.findById(formId)
+                    .then(function (form) {
+                        form.fields.push(newField);
+                        form.save(function(err,newForm){
+                            if(err)
+                                deferred.reject(err);
+                            else
+                                deferred.resolve(newForm.fields);
+                        })
+
+                    }, function (err){
+                        deferred.reject(err);
+                    });
+            }
+        });
+        return deferred.promise;
+    }
+
     function updateField(formId,fieldId,field){
         var deferred = q.defer();
         FormModel.findById(formId)
@@ -101,6 +89,18 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
                 });
             },function(err){
                 deferred.reject(err);
+            });
+        return deferred.promise;
+    }
+
+    function getFieldsForForm(formId){
+        var deferred = q.defer();
+        FormModel.findById(formId,
+            function(err,form){
+                if(err)
+                    deferred.reject(err);
+                else
+                    deferred.resolve(form.fields);
             });
         return deferred.promise;
     }

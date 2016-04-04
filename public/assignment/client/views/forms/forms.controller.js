@@ -6,9 +6,7 @@
         .controller("FormController", FormController);
 
     function FormController($scope, $location, UserService, FormService) {
-
         UserService.checkLoggedIn();
-
 
         $scope.error = null;
         $scope.selectedForm = null;
@@ -42,16 +40,16 @@
                                             $scope.error = null;
                                         },
                                         function(err){
-                                            $scope.error = "No Forms for user";
+                                            $scope.error = "User does not have any form";
                                         });
                             }else{
-                                $scope.error = "Form title cannot be empty";
+                                $scope.error = "Name of the form cannot be empty";
                             }},
                         function (err){
-                            $scope.error = "Cannot create form";
+                            $scope.error = "Unable to create the form";
                         });
             }else{
-                $scope.error = "Form title cannot be empty";
+                $scope.error = "Name of the form cannot be empty";
             }
         }
 
@@ -72,15 +70,15 @@
                                         $scope.error = null;
                                     },
                                     function(err){
-                                        $scope.error = "No Forms for user";
+                                        $scope.error = "User does not have any form";
                                     });
                         },
                         function(err){
-                            $scope.error = "Cannot Update";
+                            $scope.error = "Unable to update form information";
                         });
             }
             else{
-                $scope.error = "Form name cannot be empty";
+                $scope.error = "Name of the form cannot be empty";
             }
         }
 
@@ -94,11 +92,11 @@
                                     $scope.error = null;
                                 },
                                 function(err){
-                                    $scope.error = "No Forms for user";
+                                    $scope.error = "User does not have any form";
                                 });
                     },
                     function(err){
-                        $scope.error = "Cannot Delete";
+                        $scope.error = "Unable to delete form";
                     });
         }
 

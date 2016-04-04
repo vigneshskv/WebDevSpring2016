@@ -1,6 +1,6 @@
+"use strict";
 module.exports = function (db,mongoose,FormModel){
     var q = require('q');
-    var forms = require("./form.mock.json");
 
     var api = {
         findFormByUserId:findFormByUserId,
@@ -21,7 +21,6 @@ module.exports = function (db,mongoose,FormModel){
             else
                 deferred.resolve(forms);
         });
-
         return deferred.promise;
     }
 

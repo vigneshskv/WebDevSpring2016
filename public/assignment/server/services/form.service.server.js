@@ -1,14 +1,13 @@
-module.exports = function (app, formModel){
+"use strict";
 
+module.exports = function (app, formModel){
     app.get("/api/assignment/user/:userId/form", findFormByUserId);
     app.get("/api/assignment/form/:formId", findFormById);
     app.delete("/api/assignment/form/:formId", deleteFormById);
     app.post("/api/assignment/user/:userId/form", createForm);
     app.put("/api/assignment/form/:formId", updateFormById);
 
-
     function findFormByUserId(req,res){
-        console.log("Inside webservice");
         formModel.findFormByUserId(req.params.userId)
             .then(function(forms){
                     res.json(forms);
@@ -28,7 +27,6 @@ module.exports = function (app, formModel){
                     res.status(400).send(err);
                 }
             );
-
     }
 
     function deleteFormById(req,res){
@@ -63,14 +61,4 @@ module.exports = function (app, formModel){
                 }
             );
     }
-
-    //function formResponse(form){
-    //    if(form != null){
-    //        res.json(form);
-    //    }
-    //    else{
-    //        res.json({message: "Cannot find form"});
-    //    }
-    //}
-
 };
