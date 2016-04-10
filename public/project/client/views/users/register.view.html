@@ -1,0 +1,63 @@
+<title>Register</title>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <div ng-show="message" class="alert alert-danger" role="alert">{{message}}</div>
+            <h1 class="page-header">Register</h1>
+
+            <form class="form-horizontal" name="registrationForm" novalidate>
+                <div class="form-group">
+                    <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+                    <div class="col-sm-10">
+                        <input ng-model = "user.username"
+                               required autofocus
+                               type="text"
+                               class="form-control"
+                               id="inputUsername"
+                               placeholder="Username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input ng-model = "user.password"
+                               type="password"
+                               class="form-control"
+                               id="inputPassword3"
+                               placeholder="Password"
+                                required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputVerifyPassword3" class="col-sm-2 control-label">VerifyPassword3</label>
+                    <div class="col-sm-10">
+                        <input ng-model = "user.verifyPassword"
+                               type="password"
+                               class="form-control"
+                               id="inputVerifyPassword3"
+                               placeholder="VerifyPassword" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input ng-model = "user.email"
+                               type="email"
+                               class="form-control"
+                               id="inputEmail3"
+                               placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <a class="btn btn-primary btn-lg btn-block"
+                           role="button"
+                           ng-click = "register(user)">Register</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
