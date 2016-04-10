@@ -1,0 +1,67 @@
+<h2>Search</h2>
+
+<input ng-model="title" class="form-control"/>
+<button
+        ng-click="search(title)"
+        class="btn btn-primary btn-block">
+    Search
+</button>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Poster</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>RatingImage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="restuarant in restuarants">
+            <td><img ng-src={{restuarant.image_url}} alt="Description" /></td>
+            <td>{{restuarant.id}}</td>
+            <td>
+                <a href="#/detail/{{restuarant.id}}">
+                {{restuarant.name}}
+                </a>
+            </td>
+            <td>{{restuarant.rating}}</td>
+            <td><img ng-src={{restuarant.rating_img_url}} alt="Description" /></td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail3">Id</label>
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="ID">
+                    </div>
+                </form>
+            </td>
+            <td>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail3">Name</label>
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Name">
+                    </div>
+                </form>
+            </td>
+            <td>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail3">Rating</label>
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Rating">
+                    </div>
+                </form>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success">Add</button>
+                <button type="button" class="btn btn-primary">Update</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

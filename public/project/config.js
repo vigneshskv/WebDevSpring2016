@@ -11,7 +11,12 @@
                 templateUrl: "home/home.view.html"
             })
             .when("/search", {
-                templateUrl: "search/search.view.html"
+                templateUrl: "search/search.view.html",
+                controller: "SearchController"
+            })
+            .when("/detail/:restuarantID", {
+                templateUrl: "search/detail.view.html",
+                controller: "DetailController"
             })
             .otherwise({
                 redirectTo: "/home"
