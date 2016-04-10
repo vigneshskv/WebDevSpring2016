@@ -2,5 +2,5 @@
 
 (function (){
     angular
-        .module("FormBuilderApp", ["ngRoute"]);
+        .module("UrbanAppetizerApp", ["ngRoute"]);
 })();
