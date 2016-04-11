@@ -23,15 +23,14 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 }
 
 // connect to the database
-var db = mongoose.connect(connectionString);
-
-var ipaddress    = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var port         = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var db              = mongoose.connect(connectionString);
+var ipaddress       = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var port            = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 //app.use(cors());
 //app.options('*', cors());
 
-app.use(bodyParser.json());
+app.use(bodyParser.json()); // informing bodyParser to expect JSON data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: true,
     saveUninitialized: true}));
@@ -46,7 +45,7 @@ app.use(express.urlencoded()); // to support URL-encoded bodies
 // no pattern match inside /public directory, only match physical files
 // index.html is a special case, so even if no file specifically mentioned, it gives index.html = default
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public')); //tells location of static contents
 
 
 app.get('/hello', function(req, res){
@@ -54,5 +53,5 @@ app.get('/hello', function(req, res){
 });
 
 app.listen(port, ipaddress);
-require("./public/assignment/server/app.js")(app,db,mongoose);
+require("./public/assignment/server/app.js")(app,db,mongoose); // creating for assignment
 // make mongoose connection

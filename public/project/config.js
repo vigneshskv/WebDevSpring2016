@@ -14,6 +14,10 @@
                 templateUrl: "search/search.view.html",
                 controller: "SearchController"
             })
+            .when("/search/:title", {
+                templateUrl: "search/search.view.html",
+                controller: "SearchController"
+            })
             .when("/detail/:restuarantID", {
                 templateUrl: "search/detail.view.html",
                 controller: "DetailController"
