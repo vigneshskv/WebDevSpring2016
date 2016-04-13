@@ -6,8 +6,8 @@ var mongoose        = require ('mongoose');
 //var multer          = require('multer');
 //var passport        = require('passport');
 //var localStrategy   = require('passport-local').Strategy;
-var cookieParser    = require('cookie-parser');
-var session         = require('express-session');
+var cookieParser    = require('cookie-parser'); // parse cookie from the header
+var session         = require('express-session');   // api to maintain objects in cookie per session
 //var cors            = require('cors');
 
 var connectionString = 'mongodb://127.0.0.1:27017/WebDev2016';
@@ -32,10 +32,10 @@ var port            = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.use(bodyParser.json()); // informing bodyParser to expect JSON data
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: "secret", resave: true,
-    saveUninitialized: true}));
+app.use(session({ secret: process.env.PASSPORT_SECRET, resave: true,
+    saveUninitialized: true}));    // instantiate session
 //app.use(multer());
-app.use(cookieParser());
+app.use(cookieParser());    // instating cookie parser
 //app.use(passport.initialize());
 //app.use(passport.session());
 app.use(express.json());       // to support JSON-encoded bodies
@@ -54,4 +54,5 @@ app.get('/hello', function(req, res){
 
 app.listen(port, ipaddress);
 require("./public/assignment/server/app.js")(app,db,mongoose); // creating for assignment
+require("./public/project/server/app.js")(app,db,mongoose); // creating for project
 // make mongoose connection
