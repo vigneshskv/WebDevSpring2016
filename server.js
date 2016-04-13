@@ -32,7 +32,7 @@ var port            = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.use(bodyParser.json()); // informing bodyParser to expect JSON data
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: process.env.PASSPORT_SECRET, resave: true,
+app.use(session({ secret: "secret", resave: true,
     saveUninitialized: true}));    // instantiate session
 //app.use(multer());
 app.use(cookieParser());    // instating cookie parser
