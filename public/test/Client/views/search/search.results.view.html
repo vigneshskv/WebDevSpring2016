@@ -1,0 +1,60 @@
+<div>
+    <h2>Showing results for "{{model.searchQueryString}}"</h2>
+    <div class="table">
+        <div class="row" ng-hide="model.addFavMsg == null">
+            <div class="alert {{model.fav_class}} fade in">
+                <a href="" class="close" ng-click="model.hideAlert()" aria-label="close">&times;</a>
+                {{model.addFavMsg}}
+            </div>
+        </div>
+        <div ng-repeat="book in model.bookResults">
+            <div class="row text-nowrap">
+                <div class="col-md-3">
+                    <img width="100px" ng-src={{book.volumeInfo.imageLinks.smallThumbnail}}>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="row text-nowrap">
+                        <h3><a ng-click="model.getBookDetails(book)">
+                            {{book.volumeInfo.title}}</a>
+                        </h3>
+                    </div>
+                    <div class="row text-nowrap">
+                        <a ng-href={{book.volumeInfo.previewLink}} target="_blank">Preview on Google</a>
+                    </div>
+
+                    <div ng-if="book.volumeInfo.averageRating > 0" class="row text-nowrap">
+                        <h4>User Sentiment Rating</h4>
+                    </div>
+                    <div class="row text-nowrap" >
+                        <div ng-if="book.volumeInfo.averageRating > 0" class="progress-bar"
+                             ng-class = "{'progress-bar-success'  : ((book.volumeInfo.averageRating >= 3.5) && (book.volumeInfo.averageRating <= 5)),
+                                          'progress-bar-info'     : ((book.volumeInfo.averageRating >= 2.5) && (book.volumeInfo.averageRating < 3.5)),
+                                          'progress-bar-warning'  : ((book.volumeInfo.averageRating >= 1.5) && (book.volumeInfo.averageRating < 2.5)),
+                                          'progress-bar-danger'   : ((book.volumeInfo.averageRating >= 0 ) && (book.volumeInfo.averageRating < 1.5))}"
+                             role="progressbar"
+                             aria-valuenow="book.volumeInfo.averageRating * 20" aria-valuemin="0" aria-valuemax="100"
+                             style="width:{{book.volumeInfo.averageRating * 20}}%">
+                            {{book.volumeInfo.averageRating * 20}}
+                        </div>
+                    </div>
+                    <div class="row text-nowrap" ng-hide="model.isLogin()">
+                        <a class="disabled" ng-click="model.addFav(book)"
+                           style="pointer-events:{{model.getFavButtonState(book)}}">
+                            <span style="color:{{model.getFavButtonColor(book)}}"
+                                  class="glyphicon glyphicon-heart text-muted"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            <div class="row">
+                <div class="col-md-16 text-justify">
+                    <p>{{book.volumeInfo.description}}</p>
+                </div>
+            </div>
+            &nbsp;
+            <hr/>
+        </div>
+    </div>
+</div>

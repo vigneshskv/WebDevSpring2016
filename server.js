@@ -4,8 +4,8 @@ var request         = require('request');
 var app             = express();
 var mongoose        = require ('mongoose');
 //var multer          = require('multer');
-//var passport        = require('passport');
-//var localStrategy   = require('passport-local').Strategy;
+var passport        = require('passport');
+var localStrategy   = require('passport-local').Strategy;
 var cookieParser    = require('cookie-parser'); // parse cookie from the header
 var session         = require('express-session');   // api to maintain objects in cookie per session
 //var cors            = require('cors');
@@ -36,8 +36,8 @@ app.use(session({ secret: "secret", resave: true,
     saveUninitialized: true}));    // instantiate session
 //app.use(multer());
 app.use(cookieParser());    // instating cookie parser
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
 
@@ -56,3 +56,7 @@ app.listen(port, ipaddress);
 require("./public/assignment/server/app.js")(app,db,mongoose); // creating for assignment
 require("./public/project/server/app.js")(app,db,mongoose); // creating for project
 // make mongoose connection
+
+
+//test
+require("./public/test/Server/app.js")(app,db,mongoose,passport);
