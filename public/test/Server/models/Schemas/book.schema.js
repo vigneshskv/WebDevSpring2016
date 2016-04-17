@@ -1,4 +1,4 @@
-
+"use strict";
 module.exports = function(mongoose) {
     var breBookSchema =  mongoose.Schema({
             ISBN_13             : String,

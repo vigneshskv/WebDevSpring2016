@@ -1,3 +1,4 @@
+"use strict";
 module.exports = function(app, model, mongoose, passport){
 
     //var breUserSchema = require("../models/schemas/user.schema.js")(mongoose);

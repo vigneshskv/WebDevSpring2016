@@ -1,5 +1,4 @@
-//angular.module('myModule', ['ui.bootstrap']);
-//angular.module('RatingDemoCtrl', ['ui.bootstrap']);
+"use strict";
 angular.module('UrbanAppetizerApp')
     .controller('RatingCtrl', function ($rootScope) {
 
