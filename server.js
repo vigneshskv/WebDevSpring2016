@@ -54,8 +54,8 @@ app.get('/hello', function(req, res){
 
 app.listen(port, ipaddress);
 require("./public/assignment/server/app.js")(app,db,mongoose); // creating for assignment
-require("./public/project/server/app.js")(app,db,mongoose); // creating for project
+//require("./public/project/server/app.js")(app,db,mongoose); // creating for project
 // make mongoose connection
 
 //test
-//require("./public/test/Server/app.js")(app,db,mongoose,passport);
+require("./public/test/Server/app.js")(app,db,mongoose,passport);
