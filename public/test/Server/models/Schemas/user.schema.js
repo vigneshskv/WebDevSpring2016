@@ -1,4 +1,4 @@
-"use strict";
+
 module.exports = function(mongoose) {
 
     //var mongoose = require('mongoose');
