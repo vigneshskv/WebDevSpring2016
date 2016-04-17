@@ -22,7 +22,6 @@ module.exports = function(app, db, mongoose, passport){
     var breBookReviewSchema         = require("schemas/book.review.schema.js")(mongoose);
     var breBookReviewModel          = mongoose.model("breBookReviewModel", breBookReviewSchema);
 
-
     var api = {
         CreateNewUser                   : CreateNewUser,
         FindAll                         : FindAll,
