@@ -23,12 +23,13 @@
         }
 
         //console.log("Hello from Home controller");
-        function searchQuery(searchQueryString){
+        function searchQuery(searchQueryString, searchLocationString){
             //console.log("func called");
             //console.log(searchQueryString);
-            if(!angular.isUndefined(searchQueryString)){
+            if(!angular.isUndefined(searchQueryString) && !angular.isUndefined(searchLocationString)){
                 //$rootScope.searchQueryString = searchQueryString;
                 $window.sessionStorage.searchQueryString = searchQueryString;
+                $window.sessionStorage.searchLocationString = searchLocationString;
                 $location.url("/search_result");
             }
         }

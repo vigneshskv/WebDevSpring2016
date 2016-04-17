@@ -1,5 +1,5 @@
 <h1 class="page-header">Search Restuarant here</h1>
-<br/>
+<!--<br/>
 <br/>
 <br/>
 <br/>
@@ -13,3 +13,28 @@
                 Search </button>
         </div>
 </div>
+
+<br/>
+<br/>
+<br/>-->
+
+<input type="text"
+       class="form-control"
+       placeholder="Enter name of Restuarant here ..."
+       ng-model="model.searchQueryString"
+       //ng-keyup="$event.keyCode == 13 ? model.searchQuery(model.searchQueryString) : null"
+>
+<br>
+<input type="text"
+       class="form-control"
+       placeholder="Enter City/State here ..."
+       ng-model="model.searchLocation"
+       ng-keyup="$event.keyCode == 13 ? model.searchQuery(model.searchQueryString, model.searchLocation) : null">
+<button
+        ng-click="model.searchQuery(model.searchQueryString, model.searchLocation)"
+        class="btn btn-primary btn-block">
+    Search
+</button>
+
+
+

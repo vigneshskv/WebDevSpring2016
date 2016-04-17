@@ -8,11 +8,12 @@
     function ClientSearchService($http,$q) {
 
         var service = {
-            searchGoogleBooks           : searchGoogleBooks,
+            //searchGoogleBooks           : searchGoogleBooks,
             analyseReview               : analyseReview,
             findRestuarantByTitle       : findRestuarantByTitle
         };
         return service;
+
 
         function randomString(length, chars) {
             var result = '';
@@ -22,8 +23,8 @@
         }
 
 
-        function findRestuarantByTitle(title){
-            var place = "boston";
+        function findRestuarantByTitle(title, location){
+
 
             var deferred = $q.defer();
             var method = "GET";
@@ -32,7 +33,7 @@
 
             params = {
                 callback: 'angular.callbacks._0',
-                location: place,
+                location: location,
                 limit: 10,
 
                 oauth_consumer_key: 'LRhQe7B3E8aZX7958OhD9w',
@@ -65,9 +66,9 @@
                     /*console.log(response.items);
                      return response.items;*/
                 }
-            }).error(function(response, status, header, config) {
+            }).error(function(err, status, header, config) {
                 ////console.log(status);
-                deferred.resolve(response);
+                deferred.reject(err);
             });
             return deferred.promise;
         }

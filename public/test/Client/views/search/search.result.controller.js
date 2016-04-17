@@ -63,11 +63,15 @@
         }
 
         model.searchQueryString = $window.sessionStorage.searchQueryString;
+        model.searchLocationString = $window.sessionStorage.searchLocationString;
+
+
         searchForQuery();
         function searchForQuery() {
-            if (!angular.isUndefined(model.searchQueryString)) {
+            if (!angular.isUndefined(model.searchQueryString)
+                && !angular.isUndefined(model.searchLocationString)) {
                 model.addFavMsg = null;
-                searchQuery(model.searchQueryString);
+                searchQuery(model.searchQueryString, model.searchLocationString);
             } else {
                 //searchQuery("Godfather");
                 $location.url("/homecc");
@@ -87,21 +91,24 @@
             $location.url("/bookdetail");
         }
 
-        function searchQuery(searchQueryString) {
+        function searchQuery(searchQueryString, searchLocationString) {
             //console.log("func called");
             //console.log(searchQueryString);
-            if(!angular.isUndefined(searchQueryString)){
+            if(!angular.isUndefined(searchQueryString) && !angular.isUndefined(searchLocationString)){
                 //ClientSearchService.searchGoogleBooks(searchQueryString)
-                ClientSearchService.findRestuarantByTitle(searchQueryString)
+                ClientSearchService.findRestuarantByTitle(searchQueryString, searchLocationString)
                 .then(function (searchResult) {
-                        if(searchResult == 400){
+                        /*if(searchResult == 400  ){
                             model.fav_class = "alert-warning";
                             model.addFavMsg = "Oops! we could not find the book you were looking for. Please try again";
                         }
-                    else{
+                    else{*/
                             getFavBooksForCurrentUser();
                             model.bookResults = searchResult.items;
-                        }
+                        //}
+                },function(err){
+                    model.fav_class = "alert-warning";
+                    model.addFavMsg = "Oops! we could not find the Restaurant you were looking for. Please try again";
                 });
             }
         }
