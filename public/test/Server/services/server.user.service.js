@@ -1,28 +1,23 @@
 "use strict";
 module.exports = function(app, model, mongoose, passport){
 
-    //var breUserSchema = require("../models/schemas/user.schema.js")(mongoose);
-    //var breUserModel = mongoose.model("breUserModel",breUserSchema);
-
     var LocalStrategy = require('passport-local').Strategy;
+
     app.post("/rest/api/user",                  CreateUser);
     app.get("/rest/api/user",                   FindAllUsers);
     app.get("/rest/api/user/:id",               FindUserById);
     app.put("/rest/api/user/:id",               UpdateUserById);
     app.delete("/rest/api/user/:id",            RemoveUserByID);
 
-
     // user Friends APIS
     app.post("/rest/api/friend/:userId/:friendId" , AddFriendForUserId);
     app.get("/rest/api/friends/:userId",            FindFriendsAndFollowersForId);
     app.delete("/rest/api/friend/:userId/:friendId",  RemoveFriendOrFollower);
 
-
     // Login APIs
     app.post("/rest/api/login", passport.authenticate('local'), loginUser);
     app.post("/rest/api/logout",                                logOutUser);
     app.get("/rest/api/loggedin",                               loggedIn);
-
 
     //User BOOK APIs
     app.post("/rest/api/bookfav/:userId",           addFavBookForUser);
@@ -269,14 +264,4 @@ module.exports = function(app, model, mongoose, passport){
             next();
         }
     };
-
-    /*function ensureAuthenticated(req, res, next) {
-     if (req.isAuthenticated())
-     return next();
-     else{
-     //TODO
-     }
-     // Return error content: res.jsonp(...) or redirect: res.redirect('/login')
-     }*/
-
 };
