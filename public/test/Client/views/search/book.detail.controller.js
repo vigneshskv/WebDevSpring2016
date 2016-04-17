@@ -117,33 +117,14 @@
 
         function submitReview(userReview){
             if(!angular.isUndefined(userReview)){
-                ClientSearchService.analyseReview(userReview)
-                    .then(function (sentimentResponse) {
-                        if ((sentimentResponse.status === "OK")
-                            && (sentimentResponse.docSentiment.type != "neutral")) {
-                            displayReviewFeedback(sentimentResponse.docSentiment);
-                            //console.log(sentimentResponse.docSentiment);
-                            var centScore = getcentScore(sentimentResponse.docSentiment.score);
-                            console.log("model.book");
-                            console.log(model.book);
-                            ClientUserService.submitReview(model.book, $rootScope.user, userReview, centScore)
-
-                                .then(function (reviewSubmitResult) {
-                                    //console.log(reviewSubmitResult);
-                                    clearTextArea();
-                                    getReviewsForBookISBN(model.book.id);
-                                });
-                        }
-                        else {
-                            model.alert_class = "alert-warning";
-                            model.sentimentMsg = "Oops,,  Our sentiment analysis engine failed to analyse your review. " +
-                                "Please write your review again!";
-                            clearTextArea();
-                            return;
-                        }
+                ClientUserService.submitReview(model.book, $rootScope.user, userReview)
+                    .then(function (reviewSubmitResult) {
+                        //console.log(reviewSubmitResult);
+                        clearTextArea();
+                        getReviewsForBookISBN(model.book.id);
                     });
             }
-            else{
+        else{
                 model.reviewBlankMsg = "Write a review in about 700 characters to submit!";
             }
         }

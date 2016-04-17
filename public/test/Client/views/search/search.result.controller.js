@@ -113,34 +113,32 @@
             }
         }
 
-        function addFav(book){
-            console.log(book);
-            ClientUserService.addFavBookForUser($rootScope.user._id,book)
+        function addFav(restaurant){
+            console.log(restaurant);
+            ClientUserService.addFavBookForUser($rootScope.user._id,restaurant)
                 .then(function (favAddResult){
                     if(favAddResult != null) {
                         model.fav_class = "alert-success";
-                        model.addFavMsg = "\""+book.name+ "\"" + " was added to your Favorites";
+                        model.addFavMsg = "\""+restaurant.name+ "\"" + " was added to your Favorites";
                         $window.scrollTo(0,0)
                         //searchQuery(model.searchQueryString);
                         getFavBooksForCurrentUser();
                     }else{
                         model.fav_class = "alert-warning";
-                        model.addFavMsg = "You have already added this book as your favorites";
+                        model.addFavMsg = "You have already added this restaurant as your favorites";
                         $window.scrollTo(0,0)
                     }
                 });
         }
 
+
         function isLogin(){
             if($rootScope.user == null)
-            {
                 return true;
-            }
             else{
                 var loggedInUser = $rootScope.user.username;
                 model.username = loggedInUser[0].toUpperCase() + loggedInUser.slice(1);
             }
         }
     }
-
 })();

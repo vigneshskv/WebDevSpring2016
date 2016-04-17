@@ -1,6 +1,5 @@
 "use strict";
 (function(){
-
     angular
         .module("UrbanAppetizerApp")
         .factory("ClientSearchService",ClientSearchService);
@@ -8,8 +7,6 @@
     function ClientSearchService($http,$q) {
 
         var service = {
-            //searchGoogleBooks           : searchGoogleBooks,
-            analyseReview               : analyseReview,
             findRestuarantByTitle       : findRestuarantByTitle
         };
         return service;
@@ -24,8 +21,6 @@
 
 
         function findRestuarantByTitle(title, location){
-
-
             var deferred = $q.defer();
             var method = "GET";
             var url = "http://api.yelp.com/v2/search?callback=JSON_CALLBACK";
@@ -35,7 +30,6 @@
                 callback: 'angular.callbacks._0',
                 location: location,
                 limit: 10,
-
                 oauth_consumer_key: 'LRhQe7B3E8aZX7958OhD9w',
                 oauth_token: '1Jhbrejc0L5lWRbpvgzlBW3ed_6d346K',
                 oauth_signature_method: "HMAC-SHA1",
@@ -55,26 +49,21 @@
             $http.jsonp(url, {
                 params: params
             }).success(function(response) {
-                //deferred.resolve(response);
                 if(response != null) {
-                    console.log(response);
-                    if(response.total === 0){
+                    //console.log(response);
+                    if(response.total === 0)
                         deferred.resolve(400);
-                    }
                     var trimmedResponse = trimResponse(response);
                     deferred.resolve(trimmedResponse);
-                    /*console.log(response.items);
-                     return response.items;*/
                 }
             }).error(function(err, status, header, config) {
-                ////console.log(status);
                 deferred.reject(err);
             });
             return deferred.promise;
         }
 
         function findRestuarantDetailByID(restuarantID, callback){
-            console.log("inside serivces resID :"+restuarantID)
+            //console.log("inside serivces resID :"+restuarantID)
 
             var deferred=$q.defer();
             var method = "GET";
@@ -113,39 +102,7 @@
         }
 
 
-
-//----------------------------------------------------------------------------------------------
-        // get result from API for searchQuery
-        function searchGoogleBooks(searchQuery) {
-            //console.log("Client Search Service :: Searching for Query -> " + searchQuery);
-
-            var url = "https://www.googleapis.com/books/v1/volumes?q=" + searchQuery + "&key=AIzaSyDX4yrNGscA-AsXKxw5mzD6oKxnjaukLT0"
-
-            var deferred = $q.defer();
-            $http.get(url)//+"&callback=JSON_CALLBACK")
-                .success(function (response) {
-                    //for all responses, set the description to 700 words
-                    if(response != null) {
-
-                        if(response.totalItems === 0){
-                            deferred.resolve(400);
-                        }
-                        var trimmedResponse = trimResponse(response);
-                        deferred.resolve(trimmedResponse);
-                        /*console.log(response.items);
-                         return response.items;*/
-                    }
-                    else
-                    {
-                        deferred.resolve(null);
-                    }
-                });
-            //return "Dummy";
-            return deferred.promise;
-        }
-
-
-        // reduce description and title length for displaying pretty
+       // reduce description and title length for displaying pretty
         function trimResponse(response){
             var responseItems = response.businesses;
             for(var i=0; i < responseItems.length; i++){
@@ -163,28 +120,6 @@
             result.items = responseItems;
 
             return result;
-
         }
-
-
-        function analyseReview(userReview) {
-            //console.log("Client Search Service :: Searching for Query -> " + searchQuery);
-            var alchemyUrl =    "http://gateway-a.watsonplatform.net/calls/text/TextGetTextSentiment?" +
-                "apikey=b0c075efc347c9a79bdd0812534fd694f86e5dc1&" +
-                "text="+userReview+"&outputMode=json&showSourceText=0"
-
-            var deferred = $q.defer();
-            $http.get(alchemyUrl)
-                .success(function (response) {
-                    //console.log(response);
-                    /*console.log(response.docSentiment);
-                    console.log(response.docSentiment.score);
-                    console.log(response.docSentiment.type);*/
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
     }
-
 })();

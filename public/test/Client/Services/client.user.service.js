@@ -1,6 +1,5 @@
 "use strict";
 (function(){
-
     angular
         .module("UrbanAppetizerApp")
         .factory("ClientUserService",ClientUserService);
@@ -22,15 +21,15 @@
             findFriendsAndFollowersForId    : findFriendsAndFollowersForId,
             removeFriendorFollower          : removeFriendorFollower,
 
-            //User Book Functions
-            addFavBookForUser               : addFavBookForUser,
-            RemoveFavBookForCurrentUser     : RemoveFavBookForCurrentUser,
-            GetFavBooksForCurrentUser       : GetFavBooksForCurrentUser,
+            //User Restaurant Functions
+            addFavBookForUser               : addFavoriteRestaurantForUser,
+            RemoveFavBookForCurrentUser     : RemoveFavRestaurantForCurrentUser,
+            GetFavBooksForCurrentUser       : GetFavRestaurantForCurrentUser,
             submitReview                    : submitReview,
-            getReviewsForBookISBN           : getReviewsForBookISBN,
+            getReviewsForBookISBN           : getReviewsForRestaurantID,
             GetReviewsByUserId              : GetReviewsByUserId,
             processReviews                  : processReviews,
-            GetBookDetailsById              : GetBookDetailsById
+            GetBookDetailsById              : GetRestaurantDetailsById
         };
         return service;
 
@@ -112,8 +111,6 @@
             //console.log(user);
             $http.post("/rest/api/login",user)
                 .success(function (userObj){
-                    console.log("login Result");
-                    console.log(userObj);
                     deferred.resolve(userObj);
                 });
             return deferred.promise;
@@ -121,7 +118,6 @@
 
         function LogOutUser(){
             var deferred = $q.defer();
-            //console.log(user);
             $http.post("/rest/api/logout")
                 .success(function (userObj){
                     deferred.resolve(userObj);
@@ -132,10 +128,8 @@
         //---------------------------------------------------------
         function AddFriendForUserId(userId, friendId){
             var deffered = $q.defer();
-            //console.log("CLIENT USER SERVICE: Adding user"+friendId+" as friend to "+userId);
             $http.post("/rest/api/friend/"+userId+"/"+friendId)
                 .success(function(userFriendObj){
-                    //console.log("RESULT:::++CLIENT USER SERVICE: Adding user"+friendId+" as friend to "+userId);
                     deffered.resolve(userFriendObj);
                 });
             return deffered.promise;
@@ -143,8 +137,6 @@
 
         function findFriendsAndFollowersForId(userId){
             var deferred = $q.defer();
-
-            console.log("finding Friends and Followers for "+userId);
             $http.get("/rest/api/friends/"+userId)
                 .success(function (friendsFollowersObj) {
                     deferred.resolve(friendsFollowersObj);
@@ -153,8 +145,6 @@
         }
 
         function removeFriendorFollower(userId, friendId){
-            console.log("calling remove friend for "+userId+" on friend"+friendId);
-
             var deferred = $q.defer();
             $http.delete("/rest/api/friend/"+userId+"/"+friendId)
                 .success(function (userObj){
@@ -164,10 +154,8 @@
         }
         //----------------------------------------------------------------------------------
 
-
-        function RemoveFavBookForCurrentUser(bookId, userId){
+        function RemoveFavRestaurantForCurrentUser(bookId, userId){
             var deferred = $q.defer();
-
             $http.delete("/rest/api/bookfav/"+userId+"/"+bookId)
                 .success(function (userFavs){
                     deferred.resolve(userFavs);
@@ -175,24 +163,18 @@
             return deferred.promise;
         }
 
-        function GetBookDetailsById(bookId) {
+        function GetRestaurantDetailsById(bookId) {
             var deferred = $q.defer();
-
             $http.get("/rest/api/bookdetails/" + bookId)
                 .success(function (bookObjRes) {
-                    //console.log(bookObjRes);
                     var bookObj = getBookDetails(bookObjRes)
-                    console.log(bookObj);
                     deferred.resolve(bookObj);
                 });
             return deferred.promise;
-
         }
 
 
         function getBookDetails(favbook){
-            //console.log(favbook);
-
             var bookObj = {};
 
             var volumeInfo = {};
@@ -206,7 +188,6 @@
             volumeInfo.previewLink                  = favbook.googlePreviewLink;
             volumeInfo.averageRating                = parseFloat(parseInt(favbook.sentimentRating))/20;
             volumeInfo.description                  = favbook.description;
-            //volumeInfo.id                           = favbook.ISBN_13;
 
             bookObj.volumeInfo = volumeInfo;
             bookObj.id                              = favbook.ISBN_13;
@@ -232,9 +213,8 @@
         }
 
 
-        function getReviewsForBookISBN(bookISBN){
+        function getReviewsForRestaurantID(bookISBN){
             var deferred = $q.defer();
-
             $http.get("/rest/api/bookreviews/"+bookISBN)
                 .success(function(bookReviews){
                    deferred.resolve(bookReviews);
@@ -243,11 +223,10 @@
         }
 
 
-        function submitReview(book, user, userReview,centScore){
-            //console.log(centScore);
+        function submitReview(book, user, userReview){
             var reviewObj = { review    : userReview,
                               username  : user.username,
-                              centScore : centScore,
+                              //centScore : centScore,
                               bookObj   : book };
             var deferred = $q.defer();
             $http.post("/rest/api/bookReview/"+ user._id, reviewObj)
@@ -258,7 +237,7 @@
         }
 
 
-        function GetFavBooksForCurrentUser(userId){
+        function GetFavRestaurantForCurrentUser(userId){
             var deferred = $q.defer();
             $http.get("/rest/api/bookfavs/"+userId)
                 .success(function (userFavs){
@@ -268,7 +247,7 @@
         }
 
 
-        function addFavBookForUser(userId,book){
+        function addFavoriteRestaurantForUser(userId,book){
             var deferred = $q.defer();
             $http.post("/rest/api/bookfav/"+userId, book)
                 .success(function (userFavObj) {
@@ -277,34 +256,32 @@
             return deferred.promise;
         }
 
-        function processReviews(userRevBooks){
-            var books = userRevBooks.bookDetails;
-            var userReviews = userRevBooks.reviews;
-            var bookReview = [];
-            for(var i=0; i<books.length; i++){
-                var bookReviewObj = {};
-                bookReviewObj.id                = books[i].ISBN_13;
-                bookReviewObj.title             = books[i].title;
-                bookReviewObj.googlePreviewLink = books[i].googlePreviewLink;
-                bookReviewObj.sentimentRating   = books[i].sentimentRating;
-                bookReviewObj.thumbnailUrl      = books[i].thumbnailUrl;
-                bookReviewObj.reviews           = [];
+        function processReviews(userRevRestaurants){
+            var restuarants = userRevRestaurants.bookDetails;
+            var userReviews = userRevRestaurants.reviews;
+            var restuarantsReview = [];
+            for(var i=0; i<restuarants.length; i++){
+                var resReviewObj = {};
+                resReviewObj.id                = restuarants[i].ISBN_13;
+                resReviewObj.title             = restuarants[i].title;
+                resReviewObj.googlePreviewLink = restuarants[i].googlePreviewLink;
+                resReviewObj.sentimentRating   = restuarants[i].sentimentRating;
+                resReviewObj.thumbnailUrl      = restuarants[i].thumbnailUrl;
+                resReviewObj.reviews           = [];
                 for(var j=0; j<userReviews.length; j++){
-                    if(userReviews[j].bookId == books[i].ISBN_13){
+                    if(userReviews[j].bookId == restuarants[i].ISBN_13){
                         var userReviewObj = {};
                         userReviewObj.reviewDesc        = userReviews[j].reviewDesc;
                         userReviewObj.sentimentRating   = userReviews[j].sentimentRating;
                         userReviewObj.date              = userReviews[j].reviewDate;
                         userReviewObj.username          = userReviews[j].username;
-                        //console.log(userReviewObj);
-                        bookReviewObj.reviews.push(userReviewObj);
+
+                        resReviewObj.reviews.push(userReviewObj);
                     }
-                    //bookReviewObj.reviews.push()
                 }
-                bookReview.push(bookReviewObj);
+                restuarantsReview.push(resReviewObj);
             }
-            return bookReview;
-            //console.log(bookReview);
+            return restuarantsReview;
         }
     }
 })();
