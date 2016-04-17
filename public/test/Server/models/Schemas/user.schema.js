@@ -10,7 +10,7 @@ module.exports = function(mongoose) {
             password        : String,
             email           : String,
             joinDate        : {type : Date,  default: Date.now},
-            profilePicUrl   : {type: String, default : "//placehold.it/100x100"},
+            profilePicUrl   : {type: String, default : "//placehold.it/100x100"}
             //authType: String
 
         },
