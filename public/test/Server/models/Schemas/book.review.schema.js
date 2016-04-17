@@ -8,7 +8,7 @@ module.exports = function(mongoose) {
             // breview rating for the book by userId
             //breViewRating   : {type: Number, max: 5},
             // breview  Sentiment rating for the book by userId
-            sentimentRating : {type: Number, max:100}
+            //sentimentRating : {type: Number, max:100}
             //authType: String
         },
         {collection: "bukreview.test4.bookreview"});

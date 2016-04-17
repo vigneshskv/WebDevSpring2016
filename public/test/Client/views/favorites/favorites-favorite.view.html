@@ -14,12 +14,13 @@
             <div class ="col-md-5 col-xs-4 text-nowrap">
                     <div class="row">
                         <h3><a href="" ng-click="model.getBookDetails(favbook)">
-                            {{favbook.title}}
+                            {{favbook.ISBN_13}}
                         </a></h3>
                     </div>
                     <br/>
                     <div class="row text-nowrap">
                         <h4>User Sentiment Rating</h4>
+                        <img class="img" width="100px" ng-src={{favbook.sentimentRating}}>
                     </div>
                     <div class="row text-nowrap">
                         <div class="progress-bar"
@@ -41,7 +42,7 @@
 
                     &nbsp;
                     <div class="row">
-                        <a ng-href={{favbook.googlePreviewLink}}>Preview on Google</a>
+                        <a target="_blank" ng-href={{favbook.googlePreviewLink}}>Preview on Yelp</a>
                     </div>
             </div>
         </div>

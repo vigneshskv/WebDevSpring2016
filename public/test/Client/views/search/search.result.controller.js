@@ -90,7 +90,8 @@
             //console.log("func called");
             //console.log(searchQueryString);
             if(!angular.isUndefined(searchQueryString)){
-                ClientSearchService.searchGoogleBooks(searchQueryString)
+                //ClientSearchService.searchGoogleBooks(searchQueryString)
+                ClientSearchService.findRestuarantByTitle(searchQueryString)
                 .then(function (searchResult) {
                         if(searchResult == 400){
                             model.fav_class = "alert-warning";
@@ -110,7 +111,7 @@
                 .then(function (favAddResult){
                     if(favAddResult != null) {
                         model.fav_class = "alert-success";
-                        model.addFavMsg = "\""+book.volumeInfo.title+ "\"" + " was added to your Favorites";
+                        model.addFavMsg = "\""+book.name+ "\"" + " was added to your Favorites";
                         $window.scrollTo(0,0)
                         //searchQuery(model.searchQueryString);
                         getFavBooksForCurrentUser();

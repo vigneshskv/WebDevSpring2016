@@ -10,23 +10,24 @@
         <div ng-repeat="book in model.bookResults">
             <div class="row text-nowrap">
                 <div class="col-md-3">
-                    <img width="100px" ng-src={{book.volumeInfo.imageLinks.smallThumbnail}}>
+                    <img width="100px" ng-src={{book.image_url}}>
                 </div>
 
                 <div class="col-md-5">
                     <div class="row text-nowrap">
                         <h3><a ng-click="model.getBookDetails(book)">
-                            {{book.volumeInfo.title}}</a>
+                            {{book.name}}</a>
                         </h3>
                     </div>
+
                     <div class="row text-nowrap">
-                        <a ng-href={{book.volumeInfo.previewLink}} target="_blank">Preview on Google</a>
+                        <a ng-href={{book.url}} target="_blank">Preview on Yelp</a>
                     </div>
 
                     <div ng-if="book.volumeInfo.averageRating > 0" class="row text-nowrap">
                         <h4>User Sentiment Rating</h4>
                     </div>
-                    <div class="row text-nowrap" >
+                    <!--<div class="row text-nowrap" >
                         <div ng-if="book.volumeInfo.averageRating > 0" class="progress-bar"
                              ng-class = "{'progress-bar-success'  : ((book.volumeInfo.averageRating >= 3.5) && (book.volumeInfo.averageRating <= 5)),
                                           'progress-bar-info'     : ((book.volumeInfo.averageRating >= 2.5) && (book.volumeInfo.averageRating < 3.5)),
@@ -37,7 +38,9 @@
                              style="width:{{book.volumeInfo.averageRating * 20}}%">
                             {{book.volumeInfo.averageRating * 20}}
                         </div>
-                    </div>
+                    </div>-->
+
+                    //favorite icon
                     <div class="row text-nowrap" ng-hide="model.isLogin()">
                         <a class="disabled" ng-click="model.addFav(book)"
                            style="pointer-events:{{model.getFavButtonState(book)}}">
@@ -50,7 +53,7 @@
             &nbsp;
             <div class="row">
                 <div class="col-md-16 text-justify">
-                    <p>{{book.volumeInfo.description}}</p>
+                    <p>{{book.snippet_text}}</p>
                 </div>
             </div>
             &nbsp;

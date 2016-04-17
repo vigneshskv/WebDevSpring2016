@@ -33,6 +33,13 @@ module.exports = function(app, model, mongoose, passport){
     app.get("/rest/api/bookdetails/:bookId",        GetBookObjectById);
 
 
+    function addFavBookForUser(req, res){
+        model.AddFavBookForUser(req.params.userId, req.body)
+            .then(function (userFavObj) {
+                res.json(userFavObj);
+            });
+    }
+
     function removeFavBookForUser(req, res){
         model.RemoveFavBookForUser(req.params.userId, req.params.bookId)
             .then(function(userFavs){
@@ -81,12 +88,7 @@ module.exports = function(app, model, mongoose, passport){
             });
     }
 
-    function addFavBookForUser(req, res){
-        model.AddFavBookForUser(req.params.userId, req.body)
-            .then(function (userFavObj) {
-                res.json(userFavObj);
-            });
-    }
+
 
 
     function RemoveFriendOrFollower(req,res){

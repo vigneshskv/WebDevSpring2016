@@ -198,6 +198,7 @@ module.exports = function(app, db, mongoose, passport){
 
     function AddFavBookForUser(userId, book){
         var deferred = q.defer();
+        console.log("Entering adding favorite book for user");
         breBookFavModel.findOne({userId: userId},
             function(err, favBookObj){
                 if(err){
@@ -234,6 +235,8 @@ module.exports = function(app, db, mongoose, passport){
 
 
     function StoreBookDetails(book, updateFlag){
+        console.log("entering storebookdetails");
+        console.log(book);
         var deferred = q.defer();
         // check if book exists
         breBookModel.findOne({ISBN_13: book.id},
@@ -242,6 +245,7 @@ module.exports = function(app, db, mongoose, passport){
                     deferred.reject(err);
                 }else{
                     if(result != null){
+                        console.log("entering storebookdetails IF LOOP");
                         if(updateFlag ==1){
                             var ISBN = book.id;
                             // if book is already present, update the sentiment rating
@@ -264,31 +268,33 @@ module.exports = function(app, db, mongoose, passport){
                             //deferred.resolve(1);
                             }
                     }else{
-
+                        console.log("entering storebookdetails ELSE LOOP");
+                        console.log(book.rating_img_url);
                         /*console.log("book details not present, adding");
                         console.log(book.volumeInfo.averageRating);*/
 
-                        var avgRating = 2.5;
-                        if(book.volumeInfo.averageRating){
+                        var avgRating = "//placehold.it/10x10";
+                        if(book.rating_img_url){
                             console.log("avg rating present updating");
-                            avgRating = parseFloat(book.volumeInfo.averageRating);
+                            avgRating = book.rating_img_url;
+                            console.log("Vigfnesh"+avgRating);
                         }
                         var imageUrl = "//placehold.it/100x100";
-                        if(book.volumeInfo.imageLinks)
+                        if(book.image_url)
                         {
-                            imageUrl = book.volumeInfo.imageLinks.smallThumbnail;
+                            imageUrl = book.image_url;
                         }
 
 
                         breBookModel.create({
                             ISBN_13             : book.id,
-                            title               : book.volumeInfo.title,
-                            authors             : book.volumeInfo.authors,
+                            title               : book.name,
+                            //authors             : book.volumeInfo.authors,
                             thumbnailUrl        : imageUrl,
-                            description         : book.volumeInfo.description,
-                            googlePreviewLink   : book.volumeInfo.previewLink,
+                            description         : book.snippet_text,
+                            googlePreviewLink   : book.url,
                             //breViewRating       : book.volumeInfo.averageRating,
-                            sentimentRating     : avgRating * 20
+                            sentimentRating     : avgRating
                         },function(err,bookObj){
                             if(err){
                                 deferred.reject("err adding book");

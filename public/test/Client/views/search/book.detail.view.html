@@ -1,24 +1,30 @@
-<h2 class="text-nowrap">"{{model.book.volumeInfo.title}}" details page</h2>
+<h2 class="text-nowrap"><b>{{model.book.name}}</b> details page</h2>
 <div class="table">
     <div class="row text-nowrap">
         <div class="col-md-3">
-            <img width="100px" ng-src={{model.book.volumeInfo.imageLinks.smallThumbnail}}>
+            <img width="120px" height="200px" ng-src={{model.book.image_url}}>
         </div>
 
         <div class="col-md-5">
             <div class="row text-nowrap">
-                <h3><a ng-href={{model.book.volumeInfo.canonicalVolumeLink}} target="_blank">
-                    {{model.book.volumeInfo.title}}</a>
+                <h3><a ng-href={{model.book.url}} target="_blank">
+                    {{model.book.name}}</a>
                 </h3>
             </div>
             <div class="row text-nowrap">
-                <a ng-href={{model.book.volumeInfo.previewLink}} target="_blank">Preview on Google</a>
+                <h5>Contact Information:</h5>
+                <p>{{model.book.location.display_address[0]}}
+                    {{model.book.location.display_address[1]}}
+                    {{model.book.location.display_address[2]}} </p>
+                <p>{{model.book.phone}}</p>
+
+
             </div>
 
-            <div ng-if="model.book.volumeInfo.averageRating > 0" class="row text-nowrap">
-                <h4>User Sentiment Rating</h4>
-            </div>
             <div class="row text-nowrap">
+                <img ng-src={{model.book.rating_img_url}}>
+            </div>
+            <!--<div class="row text-nowrap">
                 <div ng-if="model.book.volumeInfo.averageRating > 0" class="progress-bar"
                      ng-class = "{'progress-bar-success'  : ((model.book.volumeInfo.averageRating >= 3.5) && (model.book.volumeInfo.averageRating < 5)),
                                       'progress-bar-info'     : ((model.book.volumeInfo.averageRating >= 2.5) && (model.book.volumeInfo.averageRating < 3.5)),
@@ -29,7 +35,7 @@
                      style="width:{{model.book.volumeInfo.averageRating * 20}}%">
                     {{model.book.volumeInfo.averageRating * 20}}
                 </div>
-            </div>
+            </div>-->
             <div class="row text-nowrap" ng-hide="model.isLogin()">
                 <a class="disabled" ng-click="model.addFav(model.book)"
                    style="pointer-events:{{model.getFavButtonState(model.book)}}">
@@ -53,7 +59,7 @@
     </div>
     <div class="row DescPara">
         <div class="col-md-16 text-justify">
-            <p>{{model.book.volumeInfo.description}}</p>
+            <p>{{model.book.snippet_text}}</p>
         </div>
     </div>
     <hr/>

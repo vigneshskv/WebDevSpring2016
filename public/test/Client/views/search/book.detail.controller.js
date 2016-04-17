@@ -66,7 +66,7 @@
                 .then(function (favAddResult){
                     if(favAddResult != null) {
                         model.fav_class = "alert-success";
-                        model.addFavMsg = "\""+book.volumeInfo.title+ "\"" + " was added to your Favorites";
+                        model.addFavMsg = "\""+book.title+ "\"" + " was added to your Favorites";
                         $window.scrollTo(0,0)
                         //searchQuery(model.searchQueryString);
                         getFavBooksForCurrentUser();
