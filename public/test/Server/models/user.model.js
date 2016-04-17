@@ -3,23 +3,23 @@ module.exports = function(app, db, mongoose, passport){
 
     var q  = require("q");
     //var flow = require("finally");
-    var breUserSchema               = require("./schemas/user.schema.js")(mongoose);
+    var breUserSchema               = require("schemas/user.schema.js")(mongoose);
     var breUserModel                = mongoose.model("breUserModel",breUserSchema);
 
     //user Friend Schema
-    var breUserFriendsSchema        = require("./schemas/user.friends.schema.js")(mongoose);
+    var breUserFriendsSchema        = require("schemas/user.friends.schema.js")(mongoose);
     var breUserFriendsModel         = mongoose.model("breUserFriendsModel",breUserFriendsSchema);
 
     //Book Details Schema
-    var breBookSchema               = require("./schemas/book.schema.js")(mongoose);
+    var breBookSchema               = require("schemas/book.schema.js")(mongoose);
     var breBookModel                = mongoose.model("breBookModel",breBookSchema);
 
     //Book Fav
-    var breBookFavSchema            = require("./schemas/book.fav.schema.js")(mongoose);
+    var breBookFavSchema            = require("schemas/book.fav.schema.js")(mongoose);
     var breBookFavModel             = mongoose.model("breBookFavModel", breBookFavSchema);
 
     //Book Review
-    var breBookReviewSchema         = require("./schemas/book.review.schema.js")(mongoose);
+    var breBookReviewSchema         = require("schemas/book.review.schema.js")(mongoose);
     var breBookReviewModel          = mongoose.model("breBookReviewModel", breBookReviewSchema);
 
 
