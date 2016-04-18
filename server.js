@@ -58,4 +58,4 @@ require("./public/assignment/server/app.js")(app,db,mongoose); // creating for a
 // make mongoose connection
 
 //test
-require("./public/test2/Server/app.js")(app,db,mongoose,passport);
+require("./public/project/Server/app.js")(app,db,mongoose,passport);
