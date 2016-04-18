@@ -13,12 +13,8 @@
         model.isNotLogin        = isNotLogin;
 
         function isNotLogin(){
-            //console.log("checking if user is logged in");
-            //console.log($rootScope.user);
-
-            if ($rootScope.user == null) {
+            if ($rootScope.user == null)
                 return false;
-            }
             return true;
         }
 

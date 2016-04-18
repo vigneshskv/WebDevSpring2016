@@ -5,10 +5,9 @@
         .controller("BookDetailController",BookDetailController);
 
 
-    function BookDetailController($window, $rootScope, $location, ClientSearchService, ClientUserService){
+    function BookDetailController($window, $rootScope, $location, ClientSearchService, ClientUserService, ClientFavouriteService){
 
         var model = this;
-
 
         //model.searchQuery = searchQuery;
         //model.addFav = addFav;
@@ -86,7 +85,7 @@
 
         function getReviewsForBookISBN(bookISBN){
             //console.log("fectching reviews for book "+model.book.volumeInfo.title);
-            ClientUserService.getReviewsForBookISBN(bookISBN)
+            ClientFavouriteService.getReviewsForBookISBN(bookISBN)
                 .then(function(bookReviews){
                     console.log(bookReviews);
                     model.reviews = bookReviews;
@@ -117,7 +116,7 @@
 
         function submitReview(userReview){
             if(!angular.isUndefined(userReview)){
-                ClientUserService.submitReview(model.book, $rootScope.user, userReview)
+                ClientFavouriteService.submitReview(model.book, $rootScope.user, userReview)
                     .then(function (reviewSubmitResult) {
                         //console.log(reviewSubmitResult);
                         clearTextArea();

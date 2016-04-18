@@ -106,7 +106,7 @@
             <div class="col-md-3 text-justify" ng-if= "!model.isCurrentUser(review.username)">
                 <h4 >{{review.username}} wrote:</h4>
             </div>
-            <div class="col-md-4">
+            <!--<div class="col-md-4">
                 <h5>Sentiment Rating for the review</h5>
             </div>
             <div class="col-md-4 progressbarAlign">
@@ -120,11 +120,12 @@
                          style="width:{{review.sentimentRating}}%">
                         {{review.sentimentRating}}
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="row DescPara">
             <div class="col-md-16 text-justify">
                 <p>{{review.reviewDesc}}</p>
+                <p> Commented date: {{review.reviewDate | date:dateFormat}}</p>
             </div>
         </div>
         <br/>

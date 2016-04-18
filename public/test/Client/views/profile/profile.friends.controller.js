@@ -13,7 +13,7 @@
 
      */
 
-    function ProfileFriendsController($rootScope,ClientUserService, $location, $window){
+    function ProfileFriendsController($rootScope,ClientUserService, ClientFriendService, $location, $window){
         console.log("ProfileFriendsController");
         var model = this;
         model.addFriend                 = addFriend;
@@ -100,7 +100,7 @@
 
         function renderFriendsFollowers() {
             // find followers for userID
-            ClientUserService.findFriendsAndFollowersForId($rootScope.user._id)
+            ClientFriendService.findFriendsAndFollowersForId($rootScope.user._id)
                 //TODO : filter current user from USER LIST
                 .then(function (friendsObj) {
                     model.Friends = friendsObj.friends;
@@ -111,14 +111,14 @@
 
         function addFriend(friend){
             console.log("PROFILE CONTROLLER : Adding user"+friend._id+" as friend to "+$rootScope.user._id);
-            ClientUserService.AddFriendForUserId($rootScope.user._id,friend._id)
+            ClientFriendService.AddFriendForUserId($rootScope.user._id,friend._id)
                 .then(function(userFriendObj){
                     renderFriendsFollowers();
                 });
         }
 
         function removeFriend(friend){
-            ClientUserService.removeFriendorFollower($rootScope.user._id, friend._id)
+            ClientFriendService.removeFriendorFollower($rootScope.user._id, friend._id)
                 .then(function(userFriendObj){
                     renderFriendsFollowers();
                 });

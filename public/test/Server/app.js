@@ -6,7 +6,6 @@ module.exports = function(app,db,mongoose,passport){
     //var formModel = require("./models/form.model.js")(db, mongoose);
     //var userSchema = require("./models/user.schema.js")();
     require("./services/server.user.service.js")(app, userModel,mongoose,passport);
-    //require("./services/form.service.js")(app, formModel);
-    //require("./services/field.service.js")(app, formModel);
-
+    require("./services/server.friend.service.js")(app, userModel,mongoose,passport);
+    require("./services/server.restuarant.service.js")(app, userModel,mongoose,passport);
 };

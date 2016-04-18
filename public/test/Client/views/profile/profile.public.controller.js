@@ -19,7 +19,7 @@
         console.log(model.user);
         GetReviewsByCurrentUser(model.user._id);
         function GetReviewsByCurrentUser(userId) {
-            ClientUserService.GetReviewsByUserId(userId)
+            ClientFavouriteService.GetReviewsByUserId(userId)
                 .then(function(userRevBooks){
                     if((userRevBooks != null)){ //&& (userRevBooks.bookDetails.length>0)){
                         renderReviews(userRevBooks);

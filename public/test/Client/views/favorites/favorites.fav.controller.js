@@ -5,7 +5,7 @@
         .controller("FavFavController",FavFavController);
 
 
-    function FavFavController($window ,$location, $rootScope, ClientUserService, ClientSearchService) {
+    function FavFavController($window ,$location, $rootScope, ClientUserService, ClientSearchService, ClientFavouriteService) {
         var model = this;
 
         model.GetFavBooksForCurrentUser = GetFavBooksForCurrentUser;
@@ -13,16 +13,13 @@
         model.removeFav                 = removeFav;
 
 
-
         GetFavBooksForCurrentUser();
         function GetFavBooksForCurrentUser() {
-            //console.log("Fetching Fav books for User :" + $rootScope.user.username);
-
-            ClientUserService.GetFavBooksForCurrentUser($rootScope.user._id)
+            ClientFavouriteService.GetFavBooksForCurrentUser($rootScope.user._id)
                 .then(function(userFavBooks){
                     if(userFavBooks != null){
                         /*console.log("userFavBooks");
-                        console.log(userFavBooks);*/
+                         console.log(userFavBooks);*/
                         model.favbooks = userFavBooks
                     }else{
                         model.favbooks = null;
@@ -53,7 +50,5 @@
                     $location.url("/bookdetail");
                 });
         }
-
-
     }
 })();

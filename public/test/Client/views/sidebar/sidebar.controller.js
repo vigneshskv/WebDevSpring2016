@@ -20,6 +20,7 @@
             }
         }
 
+
         function userLoggedIn(){
             if($rootScope.user == null){
                 return true;

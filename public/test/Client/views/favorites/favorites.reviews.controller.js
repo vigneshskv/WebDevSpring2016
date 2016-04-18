@@ -5,7 +5,7 @@
         .controller("FavReviewController",FavReviewController);
 
 
-    function FavReviewController($http, $window ,$location, $rootScope, ClientUserService, ClientSearchService) {
+    function FavReviewController($http, $window ,$location, $rootScope, ClientUserService, ClientSearchService, ClientFavouriteService) {
         var model = this;
 
         model.GetReviewsByCurrentUser = GetReviewsByCurrentUser;
@@ -17,7 +17,7 @@
         function GetReviewsByCurrentUser(userId) {
             //console.log("Fetching Reviews by User :" + $rootScope.user.username);
 
-            ClientUserService.GetReviewsByUserId(userId)
+            ClientFavouriteService.GetReviewsByUserId(userId)
                 .then(function(userRevBooks){
                     console.log("======userRevBooks=====");
                     console.log(userRevBooks);

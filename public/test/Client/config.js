@@ -93,7 +93,7 @@
 
         var deferred = $q.defer();
 
-        $http.get("/rest/api/loggedin")
+        $http.get("/api/loggedin")
             .success(function (user) {
                 $rootScope.errorMessage = null;
                 //USer is Authenticted
@@ -113,7 +113,7 @@
     var findCurrentUser = function($q, $timeout, $http, $location, $rootScope)    {
         var deferred = $q.defer();
 
-        $http.get("/rest/api/loggedin")
+        $http.get("/api/loggedin")
             .success(function(user){
                 $rootScope.errorMessage = null;
                 // User is Authenticated
