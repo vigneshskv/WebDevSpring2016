@@ -1,0 +1,54 @@
+<div>
+    <h2>Showing results for "{{model.searchQueryString}}"</h2>
+    <div class="table">
+        <div class="row" ng-hide="model.addFavMsg == null">
+            <div class="alert {{model.fav_class}} fade in">
+                <a href="" class="close" ng-click="model.hideAlert()" aria-label="close">&times;</a>
+                {{model.addFavMsg}}
+            </div>
+        </div>
+        <div ng-repeat="book in model.bookResults">
+            <div class="row text-nowrap">
+                <div class="col-md-3">
+                    <img width="100px" ng-src={{book.image_url}}>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="row text-nowrap">
+                        <h3><a ng-click="model.getBookDetails(book)">
+                            {{book.name}}</a>
+
+                        </h3>
+                    </div>
+
+                    <div class="row text-nowrap">
+                        <a ng-href={{book.url}} target="_blank">Preview on Yelp</a>
+                    </div>
+
+                    <div class="row text-nowrap">
+                        <img width="100px" ng-src={{book.rating_img_url}}>
+                    </div>
+
+                    <div class="row text-nowrap" ng-hide="model.isLogin()">
+                        <a class="disabled" ng-click="model.addFav(book)"
+                           style="pointer-events:{{model.getFavButtonState(book)}}">
+                            <!--<span style="color:{{model.getFavButtonColor(book)}}"
+                                  class="glyphicon glyphicon-heart text-muted"></span>-->
+                            <span style="color:{{model.getFavButtonColor(book)}}"
+                                  class="glyphicon glyphicon-thumbs-up"></span>
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            <div class="row">
+                <div class="col-md-16 text-justify">
+                    <p>{{book.snippet_text}}</p>
+                </div>
+            </div>
+            &nbsp;
+            <hr/>
+        </div>
+    </div>
+</div>
