@@ -66,6 +66,7 @@
                             model.message = "Username already exists, please choose a different username";
                             return;
                         }else {
+                            console.log("reached create user in view");
                             ClientUserService.createUser(user)
                                 .then(function (retuser) {
                                     if (retuser != null) {
