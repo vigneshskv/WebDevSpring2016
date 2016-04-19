@@ -45,7 +45,7 @@
                 registrationPossible = false;
             }
 
-            console.log(registrationPossible);
+            console.log("registrationpossible" +registrationPossible);
 
              if(user.email == "undefined" ||
              user.email == "undefined" ||
@@ -94,6 +94,4 @@
                 });
         }
     }
-
-
 })();
