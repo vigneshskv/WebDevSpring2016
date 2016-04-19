@@ -45,7 +45,11 @@
             $http.get("/api/user?username="+username)
                 .success(function (userResponse) {
                     deferred.resolve(userResponse);
-                });
+                })
+            .error(function (err){
+                console.log(err);
+                deferred.reject(err);
+            });
             return deferred.promise;
         }
 

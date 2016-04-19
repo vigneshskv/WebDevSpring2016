@@ -62,29 +62,31 @@
             if(user.username != null) {
                 console.log("VIGNESH ENTERED IF LOOP");
                 ClientUserService.findUserByUserName(user.username)
-                    .then(function (userResult) {
-                        if (userResult) {
-                            console.log("username already present,returning");
-                            registrationPossible = false;
-                            model.message = "Username already exists, please choose a different username";
-                            return;
-                        }else {
-                            console.log("reached create user in view");
-                            ClientUserService.createUser(user)
-                                .then(function (retuser) {
-                                    if (retuser != null) {
-                                        console.log(retuser.user);
-                                        registerCallback(retuser.user);
-                                    }
-                                    else {
-                                        model.submitDisabled = true;
-                                        model.submitDisabled = false;
-                                    }
-                                })
+                    .then(
+                        function (userResult) {
+                            if (userResult) {
+                                console.log("username already present,returning");
+                                registrationPossible = false;
+                                model.message = "Username already exists, please choose a different username";
+                                return;
+                            }else {
+                                console.log("reached create user in view");
+                                ClientUserService.createUser(user)
+                                    .then(function (retuser) {
+                                        if (retuser != null) {
+                                            console.log(retuser.user);
+                                            registerCallback(retuser.user);
+                                        }
+                                        else {
+                                            model.submitDisabled = true;
+                                            model.submitDisabled = false;
+                                        }
+                                    })
+                            }
+                        },function(err){
+                            console.log("VIGNESH ERROR IN CREATION OF USER IN MONGO");
                         }
-                    },function(error){
-                        console.log("VIGNESH ERROR IN CREATION OF USER IN MONGO");
-                    });
+                    );
             }
         }
 

@@ -2,7 +2,7 @@
 module.exports = function(app, db, mongoose, passport){
 
     var q  = require("q");
-    //var flow = require("finally");
+
     var uaUserSchema               = require("./schemas/user.schema.js")(mongoose);
     var uaUserModel                = mongoose.model("uaUserModel",uaUserSchema);
 
