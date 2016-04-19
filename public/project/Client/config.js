@@ -55,7 +55,7 @@
                         loggedin: findCurrentUser
                     }
                 })
-                .when("/bookdetail",{
+                .when("/restaurantdetail",{
                     templateUrl: "views/search/book.detail.view.html",
                     controller: "BookDetailController as model",
                     resolve: {

@@ -88,7 +88,7 @@
             $rootScope.book = book;
             $window.sessionStorage.setItem("currentBook",angular.toJson(book));
 
-            $location.url("/bookdetail");
+            $location.url("/restaurantdetail");
         }
 
         function searchQuery(searchQueryString, searchLocationString) {

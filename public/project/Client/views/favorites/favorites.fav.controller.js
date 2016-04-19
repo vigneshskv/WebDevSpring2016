@@ -34,11 +34,11 @@
             //console.log(favbook);
             ClientFavouriteService.RemoveFavRestaurantForCurrentUser(favbook.ISBN_13, $rootScope.user._id)
                 .then(function(userFavBooks){
-                    model.message = "Book successfully removed from favourite list";
+                    model.message = "Restaurant successfully removed from favourite list";
                     GetFavBooksForCurrentUser();
                 },
                     function (error){
-                        model.error = "Failed to remove the book from favorite list";
+                        model.error = "Failed to remove the Restaurant from favorite list";
                     }
                 );
         }
@@ -51,7 +51,7 @@
                 .then(function(bookObjRes){
                     console.log(bookObjRes);
                     $window.sessionStorage.setItem("currentBook",angular.toJson(bookObjRes));
-                    $location.url("/bookdetail");
+                    $location.url("/restaurantdetail");
                 });
         }
     }

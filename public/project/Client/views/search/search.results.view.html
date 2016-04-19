@@ -10,20 +10,26 @@
         <div ng-repeat="book in model.bookResults">
             <div class="row text-nowrap">
                 <div class="col-md-3">
-                    <img width="100px" ng-src={{book.image_url}}>
+                    <img width="140px" ng-src={{book.image_url}}>
                 </div>
 
                 <div class="col-md-5">
                     <div class="row text-nowrap">
                         <h3><a ng-click="model.getBookDetails(book)">
                             {{book.name}}</a>
-
                         </h3>
                     </div>
 
                     <div class="row text-nowrap">
                         <a ng-href={{book.url}} target="_blank">Preview on Yelp</a>
                     </div>
+
+
+                   <!-- <div class="col-md-5">
+                        &lt;!&ndash;<div class="row text-nowrap">&ndash;&gt;
+                        <img width="100px" ng-src={{book.rating_img_url}}>
+                            &lt;!&ndash;</div>&ndash;&gt;
+                    </div>-->
 
                     <div class="row text-nowrap">
                         <img width="100px" ng-src={{book.rating_img_url}}>
