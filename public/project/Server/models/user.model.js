@@ -4,7 +4,7 @@ module.exports = function(app, db, mongoose, passport){
     var q  = require("q");
     //var flow = require("finally");
     var uaUserSchema               = require("./schemas/user.schema.js")(mongoose);
-    var uaUserModel                = mongoose.model("fjkj",uaUserSchema);
+    var uaUserModel                = mongoose.model("uaUserModel",uaUserSchema);
 
     //user Friend Schema
     var uaUserFriendsSchema        = require("./schemas/user.friends.schema.js")(mongoose);
@@ -48,7 +48,7 @@ module.exports = function(app, db, mongoose, passport){
     return api;
 
     function CreateNewUser(user){
-        //console.log("USER MODEL CREATE USER START");
+        console.log("USER MODEL CREATE USER START");
         //console.log(user);
         var deferred = q.defer();
         var finalResult={};
