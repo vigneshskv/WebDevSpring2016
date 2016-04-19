@@ -15,8 +15,8 @@ module.exports = function(app, db, mongoose, passport){
     var uaRestuarantModel                = mongoose.model("uaRestuarantModel",uaRestaurantSchema);
 
     //Book Fav
-    var usRestaurantFavSchema            = require("./schemas/restaurant.fav.schema.js")(mongoose);
-    var usRestaurantFavModel             = mongoose.model("usRestaurantFavModel", usRestaurantFavSchema);
+    var uaRestaurantFavSchema            = require("./schemas/restaurant.fav.schema.js")(mongoose);
+    var uaRestaurantFavModel             = mongoose.model("uaRestaurantFavModel", uaRestaurantFavSchema);
 
     //Book Review
     var uaRestaurantReviewSchema         = require("./schemas/restaurant.review.schema.js")(mongoose);
@@ -69,7 +69,7 @@ module.exports = function(app, db, mongoose, passport){
                         }else {
                             //console.log(friendResult);
                             finalResult.friend = friendResult;
-                            usRestaurantFavModel.create({userId: newUser._id, bookIds: []},
+                            uaRestaurantFavModel.create({userId: newUser._id, bookIds: []},
                                 function(err, bookFavObj){
                                     if(err){
                                         console.log(err);
@@ -271,7 +271,7 @@ module.exports = function(app, db, mongoose, passport){
     function addFavRestaurantForUser(userId, book){
         var deferred = q.defer();
         console.log("Entering adding favorite book for user");
-        usRestaurantFavModel.findOne({userId: userId},
+        uaRestaurantFavModel.findOne({userId: userId},
             function(err, favBookObj){
                 if(err){
                     deferred.reject(err);
@@ -308,7 +308,7 @@ module.exports = function(app, db, mongoose, passport){
     function RemoveFavRestaurantForUser(userId, bookId){
         var deferred = q.defer();
 
-        usRestaurantFavModel.findOne({userId: userId},
+        uaRestaurantFavModel.findOne({userId: userId},
             function(err, userFavObj){
                 if(err){
                     deferred.reject(err);
@@ -330,7 +330,7 @@ module.exports = function(app, db, mongoose, passport){
 
     function GetFavRestaurantsForCurrentUser(userId){
         var deferred = q.defer();
-        usRestaurantFavModel.findOne({userId: userId},
+        uaRestaurantFavModel.findOne({userId: userId},
             function(err, favBookObj){
 
                 if(err){

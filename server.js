@@ -10,7 +10,7 @@ var cookieParser    = require('cookie-parser'); // parse cookie from the header
 var session         = require('express-session');   // api to maintain objects in cookie per session
 //var cors            = require('cors');
 
-var connectionString = 'mongodb://127.0.0.1:27017/WebDev2016';
+var connectionString = 'mongodb://127.0.0.1:27017/WebDevSpring2016';
 
 // use remote connection string
 // if running in remote server
