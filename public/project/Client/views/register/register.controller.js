@@ -45,19 +45,22 @@
                 registrationPossible = false;
             }
 
+
+
+            if(user.email == "undefined" ||
+                user.email == "undefined" ||
+                user.password == "undefined" ||
+                user.verifypassword == "undefined"
+            )
+            {
+                model.message = "All fields are mandatory";
+                registrationPossible = false;
+            }
+
             console.log("registrationpossible" +registrationPossible);
 
-             if(user.email == "undefined" ||
-             user.email == "undefined" ||
-             user.password == "undefined" ||
-             user.verifypassword == "undefined"
-             )
-             {
-             model.message = "All fields are mandatory";
-             registrationPossible = false;
-             }
-
             if(user.username != null) {
+                console.log("VIGNESH ENTERED IF LOOP");
                 ClientUserService.findUserByUserName(user.username)
                     .then(function (userResult) {
                         if (userResult) {
@@ -79,6 +82,8 @@
                                     }
                                 })
                         }
+                    },function(error){
+                        console.log("VIGNESH ERROR IN CREATION OF USER IN MONGO");
                     });
             }
         }
