@@ -60,6 +60,8 @@ module.exports = function(app, model, mongoose, passport){
         model.FindById(userId)
             .then(function (user) {
                 res.json(user);
+            },function(err){
+                res.status(400).send(err);
             });
     }
 

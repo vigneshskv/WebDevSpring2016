@@ -84,7 +84,7 @@
                                     })
                             }
                         },function(err){
-                            console.log("VIGNESH ERROR IN CREATION OF USER IN MONGO");
+                            console.log(err);
                         }
                     );
             }
