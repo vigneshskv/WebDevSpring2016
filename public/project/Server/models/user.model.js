@@ -1,82 +1,81 @@
+"use strict";
+module.exports = function(app, db, mongoose, passport) {
 
-module.exports = function(app, db, mongoose, passport){
+    var q = require("q");
 
-    var q  = require("q");
-
-    var uaUserSchema               = require("./schemas/user.schema.js")(mongoose);
-    var uaUserModel                = mongoose.model("uaUserModel",uaUserSchema);
+    var uaUserSchema = require("./schemas/user.schema.js")(mongoose);
+    var uaUserModel = mongoose.model("uaUserModel", uaUserSchema);
 
     //user Friend Schema
-    var uaUserFriendsSchema        = require("./schemas/user.friends.schema.js")(mongoose);
-    var uaUserFriendsModel         = mongoose.model("uaUserFriendsModel",uaUserFriendsSchema);
+    var uaUserFriendsSchema = require("./schemas/user.friends.schema.js")(mongoose);
+    var uaUserFriendsModel = mongoose.model("uaUserFriendsModel", uaUserFriendsSchema);
 
     //Restaurant Details Schema
-    var uaRestaurantSchema               = require("./schemas/restaurant.schema.js")(mongoose);
-    var uaRestuarantModel                = mongoose.model("uaRestuarantModel",uaRestaurantSchema);
+    var uaRestaurantSchema = require("./schemas/restaurant.schema.js")(mongoose);
+    var uaRestuarantModel = mongoose.model("uaRestuarantModel", uaRestaurantSchema);
 
-    //Book Fav
-    var uaRestaurantFavSchema            = require("./schemas/restaurant.fav.schema.js")(mongoose);
-    var uaRestaurantFavModel             = mongoose.model("uaRestaurantFavModel", uaRestaurantFavSchema);
+    //Restaurant Favourite
+    var uaRestaurantFavSchema = require("./schemas/restaurant.fav.schema.js")(mongoose);
+    var uaRestaurantFavModel = mongoose.model("uaRestaurantFavModel", uaRestaurantFavSchema);
 
-    //Book Review
-    var uaRestaurantReviewSchema         = require("./schemas/restaurant.review.schema.js")(mongoose);
-    var uaRestaurantReviewModel          = mongoose.model("uaRestaurantReviewModel", uaRestaurantReviewSchema);
+    //Restaurant Review
+    var uaRestaurantReviewSchema = require("./schemas/restaurant.review.schema.js")(mongoose);
+    var uaRestaurantReviewModel = mongoose.model("uaRestaurantReviewModel", uaRestaurantReviewSchema);
 
     var api = {
-        CreateNewUser                   : CreateNewUser,
-        FindAll                         : FindAll,
-        FindById                        : FindById,
-        findUserByUsername              : findUserByUsername,
-        Update                          : Update,
-        Delete                          : Delete,
-        findUserByCredentials           : findUserByCredentials,
+        CreateNewUser: CreateNewUser,
+        FindAll: FindAll,
+        FindById: FindById,
+        findUserByUsername: findUserByUsername,
+        Update: Update,
+        Delete: Delete,
+        findUserByCredentials: findUserByCredentials,
 
         //userFriends Functions
-        AddFriendForUserId              : AddFriendForUserId,
-        findFriendsAndFollowersForId    : findFriendsAndFollowersForId,
-        RemoveFriendorFollower          : RemoveFriendorFollower,
+        AddFriendForUserId: AddFriendForUserId,
+        findFriendsAndFollowersForId: findFriendsAndFollowersForId,
+        RemoveFriendorFollower: RemoveFriendorFollower,
 
-        //User Book Functions
-        addFavRestaurantForUser               : addFavRestaurantForUser,
-        RemoveFavRestaurantForUser            : RemoveFavRestaurantForUser,
-        GetFavRestaurantsForCurrentUser       : GetFavRestaurantsForCurrentUser,
-        SubmitReview                    : SubmitReview,
-        GetReviewsForRestaurantID           : GetReviewsForRestaurantID,
-        GetReviewsByUserId              : GetReviewsByUserId,
-        GetRestaurantObjectById               : GetRestaurantObjectById
+        //User Restaurant Functions
+        addFavRestaurantForUser: addFavRestaurantForUser,
+        RemoveFavRestaurantForUser: RemoveFavRestaurantForUser,
+        GetFavRestaurantsForCurrentUser: GetFavRestaurantsForCurrentUser,
+        SubmitReview: SubmitReview,
+        GetReviewsForRestaurantID: GetReviewsForRestaurantID,
+        GetReviewsByUserId: GetReviewsByUserId,
+        GetRestaurantObjectById: GetRestaurantObjectById
     };
     return api;
 
-    function CreateNewUser(user){
-        console.log("USER MODEL CREATE USER START");
-        //console.log(user);
+
+    function CreateNewUser(user) {
         var deferred = q.defer();
-        var finalResult={};
-        uaUserModel.create(user, function(err, newUser){
-            if(err){
+        var finalResult = {};
+
+        uaUserModel.create(user, function (err, newUser) {
+            if (err) {
                 console.log(err);
                 deferred.reject(err);
             } else {
-                //TODO, resolve both user obj and user friend obj to verify
-                //console.log("USER MODEL: CREATED USER");
-                //console.log(newUser);
                 finalResult.user = newUser;
+
+                // create empty freinds and followers for new user
                 uaUserFriendsModel.create({userId: newUser._id, friends: [], followers: []},
-                    function(err, friendResult){
-                        if(err){
+                    function (err, friendResult) {
+                        if (err) {
                             console.log(err);
                             deferred.reject(err);
-                        }else {
-                            //console.log(friendResult);
+                        } else {
                             finalResult.friend = friendResult;
+
+                            // create empty favourite restaurants for new user
                             uaRestaurantFavModel.create({userId: newUser._id, bookIds: []},
-                                function(err, bookFavObj){
-                                    if(err){
+                                function (err, bookFavObj) {
+                                    if (err) {
                                         console.log(err);
                                         deferred.reject(err);
-                                    }else{
+                                    } else {
                                         finalResult.bookFav = bookFavObj;
-                                        console.log("USER MODEL CREATE END");
                                         deferred.resolve(finalResult);
                                     }
                                 });
@@ -87,11 +86,10 @@ module.exports = function(app, db, mongoose, passport){
         return deferred.promise;
     }
 
-    function FindAll(){
-        //console.log("findall called");
+    function FindAll() {
         var deferred = q.defer();
-        uaUserModel.find(function(err,result){
-            if(err){
+        uaUserModel.find(function (err, result) {
+            if (err) {
                 deferred.reject(null);
             } else {
                 deferred.resolve(result);
@@ -100,12 +98,11 @@ module.exports = function(app, db, mongoose, passport){
         return deferred.promise;
     }
 
-    function FindById(id){
+    function FindById(id) {
         var deferred = q.defer();
-        //console.log("USER MODEL: findbyID called "+ id);
         uaUserModel.findById(id,
-            function(err,result){
-                if(err){
+            function (err, result) {
+                if (err) {
                     deferred.reject(err);
                 } else {
                     deferred.resolve(result);
@@ -114,11 +111,11 @@ module.exports = function(app, db, mongoose, passport){
         return deferred.promise;
     }
 
-    function findUserByUsername(username){
+    function findUserByUsername(username) {
         var deferred = q.defer();
         uaUserModel.findOne({username: username},
-            function(err,result){
-                if(err){
+            function (err, result) {
+                if (err) {
                     deferred.reject(null);
                 } else {
                     deferred.resolve(result);
@@ -127,74 +124,67 @@ module.exports = function(app, db, mongoose, passport){
         return deferred.promise;
     }
 
-    function Update(userId, user){
+    function Update(userId, user) {
         var deferred = q.defer();
 
         delete user._id;
         uaUserModel.update({_id: userId}, {$set: user},
-            function(err,result){
-                if(err){
+            function (err, result) {
+                if (err) {
                     deferred.resolve(err);
-                }else{
+                } else {
                     deferred.resolve(result);
                 }
             });
         return deferred.promise;
     }
 
-    function Delete(userId){
+    function Delete(userId) {
         var deferred = q.defer();
-        uaUserModel.remove({_id:userId},
-            function(err,result){
-                if(err){
+        uaUserModel.remove({_id: userId},
+            function (err, result) {
+                if (err) {
                     deferred.reject(null);
                 } else {
-                    //console.log(result);
                     deferred.resolve(result);
                 }
             });
         return deferred.promise;
     }
 
-    function findUserByCredentials(credentials){
+    function findUserByCredentials(credentials) {
         var deferred = q.defer();
         var username = credentials.username;
         var password = credentials.password;
         uaUserModel.findOne({username: username, password: password},
-            function(err,result){
-                if(err){
+            function (err, result) {
+                if (err) {
                     deferred.reject(err);
                 } else {
-                    //console.log(result);
                     deferred.resolve(result);
                 }
             });
 
         return deferred.promise;
     }
+
     //----------------------------------------------------
-    function AddFriendForUserId(userId, friendId){
-        console.log("SERVER USER MODEL: Adding user"+friendId+" as friend to "+userId);
-        //return "Hello";
-        //  x adds y as friend
+    function AddFriendForUserId(userId, friendId) {
+        console.log("SERVER USER MODEL: Adding user" + friendId + " as friend to " + userId);
 
         var deferred = q.defer();
-        // add y to x's friend list
         uaUserFriendsModel.findOne({userId: userId},
-            function(err,result){
+            function (err, result) {
                 uaUserFriendsModel.findOne({userId: userId},
-                    function(err, userObj){
+                    function (err, userObj) {
                         userObj.friends.push(friendId);
-                        userObj.save(function(err,result){
-                            //console.log(result);
+                        userObj.save(function (err, result) {
                         });
                     });
                 uaUserFriendsModel.findOne({userId: friendId},
-                    function(err, userObj){
-                        //console.log("user's friend has followers, updating now");
+                    function (err, userObj) {
                         userObj.followers.push(userId);
-                        userObj.save(function(err,result){
-                            //TODO, resolve both user obj and user friend obj to verify
+                        userObj.save(function (err, result) {
                             deferred.resolve(result);
                         });
                     });
@@ -208,19 +198,19 @@ module.exports = function(app, db, mongoose, passport){
         var finalRes = {};
         uaUserFriendsModel.findOne({userId: userId},
             function (err, user) {
-                uaUserModel.find({$or: [ {_id : {$in: user.friends}} ]},
-                    function(err, friends){
-                        if(err){
+                uaUserModel.find({$or: [{_id: {$in: user.friends}}]},
+                    function (err, friends) {
+                        if (err) {
                             deferred.reject(err);
                         }
                         else {
                             finalRes.friends = friends;
                             uaUserModel.find({$or: [{_id: {$in: user.followers}}]},
-                                function(err, followers){
-                                    if(err){
+                                function (err, followers) {
+                                    if (err) {
                                         deferred.reject(err);
                                     }
-                                    else{
+                                    else {
                                         finalRes.followers = followers;
                                         deferred.resolve(finalRes);
                                     }
@@ -231,30 +221,29 @@ module.exports = function(app, db, mongoose, passport){
         return deferred.promise;
     }
 
-    function RemoveFriendorFollower(userId, friendId){
+    function RemoveFriendorFollower(userId, friendId) {
         var deferred = q.defer();
         uaUserFriendsModel.findOne({userId: userId},
-            function( err, user){
-                if(err){
+            function (err, user) {
+                if (err) {
                     deferred.reject(err);
-                }else{
-                    user.friends.splice(user.friends.indexOf(friendId),1);
-                    user.save(function(err, friends){
-                        if(err){
+                } else {
+                    user.friends.splice(user.friends.indexOf(friendId), 1);
+                    user.save(function (err, friends) {
+                        if (err) {
                             deferred.reject(err);
-                        }else{
-                            // remove userId from friend's Obj
+                        } else {
                             uaUserFriendsModel.findOne({userId: friendId},
-                                function(err, friendUser){
-                                    if(err){
+                                function (err, friendUser) {
+                                    if (err) {
                                         deferred.reject(err);
-                                    }else{
+                                    } else {
                                         // remove userId from friendUser's followers
-                                        friendUser.followers.splice(friendUser.followers.indexOf(userId),1);
-                                        friendUser.save(function(err, result){
-                                            if(err){
+                                        friendUser.followers.splice(friendUser.followers.indexOf(userId), 1);
+                                        friendUser.save(function (err, result) {
+                                            if (err) {
                                                 deferred.reject(err);
-                                            }else{
+                                            } else {
                                                 deferred.resolve(result);
                                             }
                                         });
@@ -266,38 +255,33 @@ module.exports = function(app, db, mongoose, passport){
             });
         return deferred.promise;
     }
+
     //----------------------------------------------------
 
-    function addFavRestaurantForUser(userId, book){
+    function addFavRestaurantForUser(userId, restaurant) {
         var deferred = q.defer();
-        console.log("Entering adding favorite book for user");
+
         uaRestaurantFavModel.findOne({userId: userId},
-            function(err, favBookObj){
-                if(err){
+            function (err, favRestaurantObj) {
+                if (err) {
                     deferred.reject(err);
                 }
-                else{
-                    //console.log("-------favBookObj---------");
-                    //console.log(favBookObj);
-                    //console.log("----------Book ID --------");
-                    var bookId = book.id;
-                    //console.log(bookId);
-                    //console.log(favBookObj.bookIds.indexOf(bookId));
-                    if(favBookObj.bookIds.indexOf(bookId) == -1 ) {
+                else {
+                    var bookId = restaurant.id;
+                    if (favRestaurantObj.bookIds.indexOf(bookId) == -1) {
                         //console.log("user fav does not have the book, adding now");
-                        favBookObj.bookIds.push(book.id);
-                        favBookObj.save(function (err, favBookAddedObj) {
+                        favRestaurantObj.bookIds.push(restaurant.id);
+                        favRestaurantObj.save(function (err, favRestaurantAddedObj) {
                             if (err) {
                                 deferred.reject(err);
                             } else {
-                                // add the book to bookDetails schema
                                 // the argument zero is dummy value
-                                StoreBookDetails(book,0);
-                                deferred.resolve(favBookAddedObj);
+                                StoreRestaurantDetails(restaurant, 0);
+                                deferred.resolve(favRestaurantAddedObj);
                             }
                         })
                     }
-                    else{
+                    else {
                         deferred.resolve(null);
                     }
                 }
@@ -305,53 +289,50 @@ module.exports = function(app, db, mongoose, passport){
         return deferred.promise;
     }
 
-    function RemoveFavRestaurantForUser(userId, bookId){
+    function RemoveFavRestaurantForUser(userId, restaurantId) {
         var deferred = q.defer();
 
         uaRestaurantFavModel.findOne({userId: userId},
-            function(err, userFavObj){
-                if(err){
+            function (err, userFavObj) {
+                if (err) {
                     deferred.reject(err);
                 }
                 else {
-                    userFavObj.bookIds.splice(userFavObj.bookIds.indexOf(bookId), 1);
+                    userFavObj.bookIds.splice(userFavObj.bookIds.indexOf(restaurantId), 1);
                     userFavObj.save(function (err, userFavObj) {
-                        if (err) {
+                        if (err)
                             deferred.reject(err);
-                        }
-                        else {
+                        else
                             deferred.resolve(userFavObj);
-                        }
                     });
                 }
             });
         return deferred.promise;
     }
 
-    function GetFavRestaurantsForCurrentUser(userId){
+    function GetFavRestaurantsForCurrentUser(userId) {
         var deferred = q.defer();
         uaRestaurantFavModel.findOne({userId: userId},
-            function(err, favBookObj){
+            function (err, favRestaurantObj) {
 
-                if(err){
+                if (err) {
                     deferred.reject(err);
                 }
-                else{
-                    if(favBookObj.bookIds == 0){
+                else {
+                    if (favRestaurantObj.bookIds == 0) {
                         deferred.resolve(null);
                     }
                     /*console.log("user found");
                      console.log(favBookObj);*/
-                    uaRestuarantModel.find({$or: [{ISBN_13: {$in: favBookObj.bookIds}}]},
-                        function(err, favBooks){
-                            if(err){
+                    uaRestuarantModel.find({$or: [{ISBN_13: {$in: favRestaurantObj.bookIds}}]},
+                        function (err, favRestaurants) {
+                            if (err) {
                                 deferred.reject(err);
                             }
-                            else
-                            {
-                                console.log("favBooks");
-                                console.log(favBooks);
-                                deferred.resolve(favBooks);
+                            else {
+                                console.log("favRestaurants");
+                                console.log(favRestaurants);
+                                deferred.resolve(favRestaurants);
                             }
                         });
                 }
@@ -359,69 +340,66 @@ module.exports = function(app, db, mongoose, passport){
         return deferred.promise;
     }
 
-    function SubmitReview(userId, reviewObj){
+    function SubmitReview(userId, reviewObj) {
         var deferred = q.defer();
         uaRestaurantReviewModel.create({
-                bookId              : reviewObj.bookObj.id,
-                userId              : userId,
-                username            : reviewObj.username,
-                reviewDesc          : reviewObj.review,
-                sentimentRating     : reviewObj.centScore
+                bookId: reviewObj.bookObj.id,
+                userId: userId,
+                username: reviewObj.username,
+                reviewDesc: reviewObj.review,
+                sentimentRating: reviewObj.centScore
             },
-            function(err, result){
-                if(err){
+            function (err, result) {
+                if (err) {
                     deferred.reject(err);
                 }
-                else{
+                else {
                     reviewObj.bookObj.centScore = reviewObj.centScore;
-                    StoreBookDetails(reviewObj.bookObj,1);
+                    StoreRestaurantDetails(reviewObj.bookObj, 1);
                     deferred.resolve(result);
                 }
             });
         return deferred.promise;
     }
 
-    function GetReviewsForRestaurantID(bookISBN){
+    function GetReviewsForRestaurantID(restaurantID) {
         var deferred = q.defer();
 
-        uaRestaurantReviewModel.find({bookId : bookISBN},
-            function(err, result){
-                if(err){
+        uaRestaurantReviewModel.find({bookId: restaurantID},
+            function (err, result) {
+                if (err)
                     deferred.reject(err);
-                }
-                else{
-                    //console.log("----USER MDOEL Result for ISBN REVIEWS---");
-                    //console.log(result);
+                else
                     deferred.resolve(result);
-                }
+
             });
         return deferred.promise;
     }
 
-    function GetReviewsByUserId(userId){
+    function GetReviewsByUserId(userId) {
         var deferred = q.defer();
-        var bookReviewandDetails = {};
-        uaRestaurantReviewModel.find({userId : userId},
-            function(err, userReviews){
-                if(err){
+        var restaurantReviewandDetails = {};
+        uaRestaurantReviewModel.find({userId: userId},
+            function (err, userReviews) {
+                if (err) {
                     deferred.reject(err);
                 }
-                else{
-                    bookReviewandDetails.reviews = userReviews;
-                    var userBookIds = [];
-                    for(var i = 0 ; i<userReviews.length; i++){
-                        if(userBookIds.indexOf(userReviews[i].bookId) < 0) {
-                            userBookIds.push(userReviews[i].bookId);
+                else {
+                    restaurantReviewandDetails.reviews = userReviews;
+                    var userRestaurantIds = [];
+                    for (var i = 0; i < userReviews.length; i++) {
+                        if (userRestaurantIds.indexOf(userReviews[i].bookId) < 0) {
+                            userRestaurantIds.push(userReviews[i].bookId);
                         }
                     }
-                    uaRestuarantModel.find({$or: [{ISBN_13: {$in : userBookIds}}]},
-                        function(err, bookDetails){
-                            if(err){
+                    uaRestuarantModel.find({$or: [{ISBN_13: {$in: userRestaurantIds}}]},
+                        function (err, bookDetails) {
+                            if (err) {
                                 deferred.reject(err);
                             }
-                            else{
-                                bookReviewandDetails.bookDetails = bookDetails;
-                                deferred.resolve(bookReviewandDetails);
+                            else {
+                                restaurantReviewandDetails.bookDetails = bookDetails;
+                                deferred.resolve(restaurantReviewandDetails);
                             }
                         });
                 }
@@ -429,107 +407,73 @@ module.exports = function(app, db, mongoose, passport){
         return deferred.promise;
     }
 
-    function GetRestaurantObjectById(bookId){
+    function GetRestaurantObjectById(restaurantId) {
         var deferred = q.defer();
 
-        uaRestuarantModel.findOne({ISBN_13 : bookId},
-            function(err, result){
-                if(err){
+        uaRestuarantModel.findOne({ISBN_13: restaurantId},
+            function (err, result) {
+                if (err)
                     deferred.reject(err);
-                }
-                else{
-                    //console.log("+++++++++++BOOKOBJ result++++++++");
-                    //console.log(result);
+                else
                     deferred.resolve(result);
-                }
+
             });
         return deferred.promise;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function StoreBookDetails(book, updateFlag){
-        console.log("entering storebookdetails");
-        console.log(book);
+    function StoreRestaurantDetails(restaurant, updateFlag) {
+        console.log(restaurant);
         var deferred = q.defer();
-        // check if book exists
-        uaRestuarantModel.findOne({ISBN_13: book.id},
-            function(err,result){
-                if(err){
+        // check if restaurant exists
+        uaRestuarantModel.findOne({ISBN_13: restaurant.id},
+            function (err, result) {
+                if (err) {
                     deferred.reject(err);
-                }else{
-                    if(result != null){
-                        console.log("entering storebookdetails IF LOOP");
-                        if(updateFlag ==1){
-                            var ISBN = book.id;
-                            // if book is already present, update the sentiment rating
+                } else {
+                    if (result != null) {
+                        if (updateFlag == 1) {
+                            var ISBN = restaurant.id;
+                            // if restaurant is already present
 
-                            var newcentScore = parseFloat((parseInt(book.centScore) + parseInt(result.sentimentRating))/2);
-                            /*console.log("Old Sent Score "+result.sentimentRating);
-                            console.log("Review Sent Score "+book.centScore);
-                            console.log("new Sent Score "+newcentScore);*/
+                            var newcentScore = parseFloat((parseInt(restaurant.centScore) + parseInt(result.sentimentRating)) / 2);
 
-                            uaRestuarantModel.update({ISBN_13: ISBN}, {sentimentRating : newcentScore},
-                                function(err, updateResult){
-                                    if(err){
+                            uaRestuarantModel.update({ISBN_13: ISBN}, {sentimentRating: newcentScore},
+                                function (err, updateResult) {
+                                    if (err) {
                                         console.log(err);
                                         deferred.reject(err);
                                     }
-                                    else{
+                                    else {
                                         deferred.resolve(updateResult);
                                     }
                                 });
-                            //deferred.resolve(1);
-                            }
-                    }else{
-                        console.log("entering storebookdetails ELSE LOOP");
-                        console.log(book.rating_img_url);
-                        /*console.log("book details not present, adding");
-                        console.log(book.volumeInfo.averageRating);*/
+                        }
+                    } else {
+                        console.log(restaurant.rating_img_url);
 
                         var avgRating = "//placehold.it/10x10";
-                        if(book.rating_img_url){
+                        if (restaurant.rating_img_url) {
                             console.log("avg rating present updating");
-                            avgRating = book.rating_img_url;
-                            console.log("Vigfnesh"+avgRating);
+                            avgRating = restaurant.rating_img_url;
+                            console.log("Vignesh" + avgRating);
                         }
                         var imageUrl = "//placehold.it/100x100";
-                        if(book.image_url)
-                        {
-                            imageUrl = book.image_url;
+                        if (restaurant.image_url) {
+                            imageUrl = restaurant.image_url;
                         }
 
-
                         uaRestuarantModel.create({
-                            ISBN_13             : book.id,
-                            title               : book.name,
-                            //authors             : book.volumeInfo.authors,
-                            thumbnailUrl        : imageUrl,
-                            description         : book.snippet_text,
-                            googlePreviewLink   : book.url,
-                            //breViewRating       : book.volumeInfo.averageRating,
-                            sentimentRating     : avgRating
-                        },function(err,bookObj){
-                            if(err){
-                                deferred.reject("err adding book");
+                            ISBN_13: restaurant.id,
+                            title: restaurant.name,
+                            thumbnailUrl: imageUrl,
+                            description: restaurant.snippet_text,
+                            yelpPreviewLink: restaurant.url,
+                            sentimentRating: avgRating
+                        }, function (err, bookObj) {
+                            if (err) {
+                                deferred.reject("err adding restaurant");
                                 deferred.reject(err);
-                            }else{
-                                //console.log("bookObj");
-                                //console.log(bookObj);
+                            } else {
                                 deferred.resolve(1);
                             }
                         });
@@ -538,30 +482,4 @@ module.exports = function(app, db, mongoose, passport){
             })
         return deferred.promise;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

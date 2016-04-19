@@ -1,7 +1,7 @@
 "use strict";
 module.exports = function(app, model, mongoose, passport) {
 
-    var LocalStrategy = require('passport-local').Strategy;
+    //var LocalStrategy = require('passport-local').Strategy;
 
     app.post("/api/friend/:userId/:friendId", AddFriendForUserId);
     app.get("/api/friends/:userId", FindFriendsAndFollowersForId);

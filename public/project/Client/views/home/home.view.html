@@ -24,7 +24,8 @@
 
         <button
                 ng-click="model.searchQuery(model.searchQueryString, model.searchLocationString)"
-                class="btn btn-primary btn-block">
+                class="btn btn-primary btn-block"
+                ng-disabled="!model.searchLocationString || !model.searchQueryString">
             Search
         </button>
     </div>

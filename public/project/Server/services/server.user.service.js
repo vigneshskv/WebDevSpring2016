@@ -42,27 +42,37 @@ module.exports = function(app, model, mongoose, passport){
         }
         else if(password == null  && username != null){
             model.findUserByUsername(username)
-                .then(function (user) {
-                    res.json(user);
-                });
+                .then(
+                    function (user) {
+                        res.json(user);
+                    }
+                );
             return;
         }
 
         var users = model.FindAll()
-            .then(function (users) {
-                res.json(users);
-            });
+            .then(
+                function (users) {
+                    res.json(users);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
 
     function FindUserById(req,res){
         var userId = req.params.id;
         model.FindById(userId)
-            .then(function (user) {
-                res.json(user);
-            },function(err){
-                res.status(400).send(err);
-            });
+            .then(
+                function (user) {
+                    res.json(user);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
 
@@ -70,19 +80,28 @@ module.exports = function(app, model, mongoose, passport){
         var user = req.body;
         var userId = req.params.id;
         model.Update(userId, user)
-            .then(function (user) {
-                //console.log(user);
-                res.json(user);
-            });
+            .then(
+                function (user) {
+                    res.json(user);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
 
     function RemoveUserByID(req, res){
         var userId = req.params.id;
         model.Delete(userId)
-            .then(function (user) {
-                res.json(user);
-            });
+            .then(
+                function (user) {
+                    res.json(user);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
 
@@ -103,13 +122,17 @@ module.exports = function(app, model, mongoose, passport){
             var credentials = {username: username, password: password};
             model
                 .findUserByCredentials(credentials)
-                .then(function(user){
-                    if(!user)
-                        return done(null, false);
-                    return done(null, user);
-                }, function(err){
-                    return done(err);
-                });
+                .then(
+                    function(user){
+                        if(!user)
+                            return done(null, false);
+
+                        return done(null, user);
+                    },
+                    function(err){
+                        return done(err);
+                    }
+                );
         }
     ));
 

@@ -1,8 +1,6 @@
-
+"use strict";
 module.exports = function(mongoose) {
 
-    //var mongoose = require('mongoose');
-    //var Schema = mongoose.Schema;
     var userSchema =  mongoose.Schema({
             firstName       : String,
             lastName        : String,
@@ -11,8 +9,6 @@ module.exports = function(mongoose) {
             email           : String,
             joinDate        : {type : Date,  default: Date.now},
             profilePicUrl   : {type: String, default : "//placehold.it/100x100"}
-            //authType: String
-
         },
         {collection: "urbanappetizer.project.users"});
 
