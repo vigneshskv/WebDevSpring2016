@@ -1,77 +1,50 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header"> Admin </h1>
+    <h2 class="sub-header">Users</h2><br>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th  ng-click="model.sortField='username'; model.order= !model.order">
+                <span  ng-show="model.sortField=='username' && !model.order" class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                <span  ng-show="model.sortField=='username' && model.order" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                Username
+            </th>
+            <th >  Password </th>
+            <th ng-click="model.sortField='firstName'; model.order= !model.order">
+                <span  ng-show="model.sortField=='firstName' && !model.order" class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                <span  ng-show="model.sortField=='firstName' && model.order" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                First Name
+            </th>
+            <th  ng-click="model.sortField='lastName'; model.order= !model.order">
+                <span  ng-show="model.sortField=='lastName' && !model.order" class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                <span  ng-show="model.sortField=='lastName' && model.order" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                Last Name
+            </th>
+            <th >  Role </th>
+            <th > Action </th>
+        </tr>
+        <tr >
+            <th > <input ng-model="model.user.username" type="text" class="form-control col-sm-2" placeholder="Username"> </th>
+            <th > <input ng-model="model.user.password" type="password" class="form-control col-sm-2" placeholder="Password"> </th>
+            <th > <input ng-model="model.user.firstName" type="text" class="form-control" placeholder="First Name"> </th>
+            <th> <input ng-model="model.user.lastName" type="text" class="form-control" placeholder="Last Name"> </th>
+            <th > <input ng-model="model.user.roles" type="text" class="form-control" placeholder="Role1, Role2"> </th>
+            <th > <span ng-click="model.add(model.user)" class="glyphicon glyphicon-plus btn btn-success" aria-hidden="true"></span>
+                <span ng-click="model.update(model.user)" class="glyphicon glyphicon-ok btn btn-primary"  aria-hidden="true"></span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat = "user in model.users | orderBy:model.sortField:model.order">
+            <td> {{user.username}}</td>
+            <td> </td>
+            <td> {{user.firstName}}</td>
+            <td> {{user.lastName}}</td>
+            <td> {{user.roles}}</td>
+            <td> <span ng-click="model.remove(user, $index)" class="glyphicon glyphicon-remove btn btn-danger" ></span>&nbsp; &nbsp;
+                <span ng-click="model.select(user)" class="glyphicon glyphicon-cog btn btn-primary" ></span></td>
+        </tr>
+        </tbody>
+    </table>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Admin</h1>
-
-            <h3>Users</h3>
-
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>
-                            <span class="glyphicon glyphicon-triangle-bottom"></span>
-                            Username
-                        </th>
-                        <th>
-                            <span class="glyphicon glyphicon-triangle-bottom"></span>
-                            Password
-                        </th>
-                        <th>
-                            <span class="glyphicon glyphicon-triangle-bottom"></span>
-                            Role
-                        </th>
-                        <th>
-                            <span class="glyphicon glyphicon-triangle-bottom"></span>
-                            Action
-                        </th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" placeholder="username"></td>
-                        <td><input type="text" class="form-control" placeholder="password"></td>
-                        <td><input type="text" class="form-control" placeholder="role1, role2"></td>
-                        <td>
-                            <span class="glyphicon glyphicon-plus"></span>
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>alice</td>
-                        <td> </td>
-                        <td>student</td>
-                        <td>
-                            <span class="glyphicon glyphicon-remove"></span>
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>bob</td>
-                        <td> </td>
-                        <td>faculty/admin</td>
-                        <td>
-                            <span class="glyphicon glyphicon-remove"></span>
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>charlie</td>
-                        <td> </td>
-                        <td> </td>
-                        <td>
-                            <span class="glyphicon glyphicon-remove"></span>
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 </div>

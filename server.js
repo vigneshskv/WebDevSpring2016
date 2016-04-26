@@ -36,6 +36,7 @@ app.use(session({ secret: "secret", resave: true,
     saveUninitialized: true}));    // instantiate session
 //app.use(multer());
 app.use(cookieParser());    // instating cookie parser
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());       // to support JSON-encoded bodies
@@ -54,4 +55,4 @@ app.get('/hello', function(req, res){
 
 app.listen(port, ipaddress);
 require("./public/assignment/server/app.js")(app,db,mongoose); // creating for assignment
-require("./public/project/Server/app.js")(app,db,mongoose,passport); // creating for project
+//require("./public/project/Server/app.js")(app,db,mongoose,passport); // creating for project

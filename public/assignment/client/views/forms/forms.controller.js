@@ -109,8 +109,6 @@
                 userId : $scope.selectedForm.userId,
                 fields : $scope.selectedForm.fields
             };
-            console.log($scope.selectedForm);
-
         }
     }
 })();

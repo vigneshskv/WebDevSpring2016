@@ -6,24 +6,24 @@
         .controller("ProfileController", ProfileController);
 
     function ProfileController ($scope, $rootScope, UserService) {
-        UserService.checkLoggedIn();
+        $scope.user = $rootScope.currentUser;
 
-        $scope.user = UserService.getUser();
         $scope.update = update;
 
-        function update($scope, user){
+        function update(user){
+
             UserService.updateUser( $rootScope.currentUser._id, user)
                 .then(
                     function (updatedUser){
                         if (updatedUser.data != null) {
                             UserService.setUser(updatedUser.data);
-                            $scope.message = "User profile information updated successfully";
+                            $scope.message = "User updated successfully";
                         }
                         else
-                            $scope.message = "Failed to update User information";
+                            $scope.message = "Cannot update User";
                     },
                     function (error){
-                        $scope.message = "Failed to update User information";
+                        $scope.message = "Cannot update User";
                     });
         }
     }

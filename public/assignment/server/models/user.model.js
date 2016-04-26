@@ -1,8 +1,11 @@
-"use strict";
 var q = require("q");
 
+
 module.exports = function(db,mongoose) {
+
     var UserSchema = require("./user.schema.server.js")(mongoose);
+
+
     var UserModel = mongoose.model('user',UserSchema);
 
     var api = {
@@ -17,39 +20,27 @@ module.exports = function(db,mongoose) {
 
     return api;
 
-    function findUserByUsername(userName){
-        var deferred = q.defer();
-
-        UserModel.findOne(
-            {username: userName},
-
-            function(err, doc) {
-                if (err)
-                    deferred.reject(err);
-                else
-                    deferred.resolve(doc);
-            });
-        return deferred.promise;
-    }
-
     function createUser(user){
         var deferred = q.defer();
-
         UserModel.create(user, function (err, doc) {
-            if(err)
+            if(err){
                 deferred.reject(err);
-            else
+            }else{
                 deferred.resolve(doc);
+            }
         });
+
         return deferred.promise;
     }
 
-    function updateUser(user, userId){
+    function updateUser(userId, user){
+        console.log(user);
         var deferred = q.defer();
 
-        UserModel.findById({_id:userId}, function(err,userFound){
-            if(err)
+        UserModel.findById({_id: userId}, function(err,userFound){
+            if(err){
                 deferred.reject(err);
+            }
             else{
                 userFound.username = user.username;
                 userFound.firstName = user.firstName;
@@ -57,6 +48,8 @@ module.exports = function(db,mongoose) {
                 userFound.password = user.password;
                 userFound.email = user.email;
                 userFound.phones = user.phones;
+                userFound.roles = user.roles;
+                userFound.type = user.type;
                 userFound.save(function(err,userUpdated){
                     if(err)
                         deferred.reject(err);
@@ -68,40 +61,77 @@ module.exports = function(db,mongoose) {
         return deferred.promise;
     }
 
-    function findAllUsers(){
-        return users;
-    }
-
     function deleteUser(userId){
-        var user = findUserById(userId);
-        if(user != null){
-            users.splice(user,1);
-            return users;
-        }
-        else
-            return null;
+        var deferred = q.defer();
+        UserModel.remove({_id : userId}, function (err, doc) {
+            if (err)
+                deferred.reject(err);
+            else {
+                console.log("user deleted");
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
     }
 
-    function findUserById(userId){
-        for(var i in users)
-            if(users[i]._id == userId)
-                return users[i];
-        return null;
+    function findAllUsers() {
+        var deferred = q.defer();
+        UserModel.find(function (err, doc) {
+            if (err)
+                deferred.reject(err);
+            else
+                deferred.resolve(doc)
+        });
+        return deferred.promise;
+    }
+
+
+
+    function findUserById(userId) {
+        var deferred = q.defer();
+        UserModel.findById({_id : userId}, function (err, doc) {
+            if (err)
+                deferred.reject(err);
+            else
+                deferred.resolve(doc);
+        });
+        return deferred.promise;
+    }
+
+
+    function findUserByUsername(userName){
+        var deferred = q.defer();
+
+        UserModel.findOne(
+
+            {username: userName},
+
+            function(err, doc) {
+
+                if (err)
+                    deferred.reject(err);
+                else
+                    deferred.resolve(doc);
+            });
+        return deferred.promise;
     }
 
     function findUserByCredentials(credentials){
         var deferred = q.defer();
+
         UserModel.findOne(
 
             { username: credentials.username,
                 password: credentials.password },
 
             function(err, doc) {
+
                 if (err)
                     deferred.reject(err);
-                else
+                 else
                     deferred.resolve(doc);
             });
+
         return deferred.promise;
     }
 };

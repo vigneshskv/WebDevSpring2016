@@ -10,7 +10,8 @@
         $scope.login = login;
 
         function login (user){
-            UserService.findUserByCredentials(user.username,user.password)
+
+            UserService.login(user)
                 .then(
                     function (user){
                         if (user.data != null){
@@ -18,11 +19,11 @@
                             $location.url('/profile');
                         }
                         else {
-                            $scope.message = "Invalid user credentials: Check entered username and password";
+                            $scope.message = "Invalid Username or Password";
                         }
                     },
                     function (err){
-                        $scope.message = "Failed to login, Please check credentials and retry";
+                        $scope.message = "Login Failed, Please try again";
                     }
                 );
         }

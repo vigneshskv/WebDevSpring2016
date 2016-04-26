@@ -6,12 +6,16 @@
         .controller("HeaderController", HeaderController);
 
     function HeaderController ($scope, $location, UserService) {
-        UserService.checkLoggedIn();
         $scope.$location = $location;
 
         $scope.logout = function logout() {
-            $location.url("/");
-            UserService.setUser(null);
+            UserService.logout()
+                .then(function(res){
+                    UserService.setUser(null);
+                    $location.url("/");
+                },function(err){
+
+                });
         }
     }
 })();
