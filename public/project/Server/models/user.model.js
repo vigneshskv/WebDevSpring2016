@@ -54,7 +54,7 @@ module.exports = function(app, db, mongoose, passport) {
 
         uaUserModel.create(user, function (err, newUser) {
             if (err) {
-                console.log(err);
+                //console.log(err);
                 deferred.reject(err);
             } else {
                 finalResult.user = newUser;
@@ -63,7 +63,7 @@ module.exports = function(app, db, mongoose, passport) {
                 uaUserFriendsModel.create({userId: newUser._id, friends: [], followers: []},
                     function (err, friendResult) {
                         if (err) {
-                            console.log(err);
+                            //console.log(err);
                             deferred.reject(err);
                         } else {
                             finalResult.friend = friendResult;
@@ -72,7 +72,7 @@ module.exports = function(app, db, mongoose, passport) {
                             uaRestaurantFavModel.create({userId: newUser._id, bookIds: []},
                                 function (err, bookFavObj) {
                                     if (err) {
-                                        console.log(err);
+                                        //console.log(err);
                                         deferred.reject(err);
                                     } else {
                                         finalResult.bookFav = bookFavObj;
@@ -170,7 +170,6 @@ module.exports = function(app, db, mongoose, passport) {
 
     //----------------------------------------------------
     function AddFriendForUserId(userId, friendId) {
-        console.log("SERVER USER MODEL: Adding user" + friendId + " as friend to " + userId);
 
         var deferred = q.defer();
         uaUserFriendsModel.findOne({userId: userId},
@@ -330,8 +329,8 @@ module.exports = function(app, db, mongoose, passport) {
                                 deferred.reject(err);
                             }
                             else {
-                                console.log("favRestaurants");
-                                console.log(favRestaurants);
+                                /*console.log("favRestaurants");
+                                console.log(favRestaurants);*/
                                 deferred.resolve(favRestaurants);
                             }
                         });
@@ -422,9 +421,7 @@ module.exports = function(app, db, mongoose, passport) {
     }
 
     function StoreRestaurantDetails(restaurant, updateFlag) {
-        console.log(restaurant);
         var deferred = q.defer();
-        // check if restaurant exists
         uaRestuarantModel.findOne({ISBN_13: restaurant.id},
             function (err, result) {
                 if (err) {
@@ -440,7 +437,6 @@ module.exports = function(app, db, mongoose, passport) {
                             uaRestuarantModel.update({ISBN_13: ISBN}, {sentimentRating: newcentScore},
                                 function (err, updateResult) {
                                     if (err) {
-                                        console.log(err);
                                         deferred.reject(err);
                                     }
                                     else {
@@ -453,9 +449,7 @@ module.exports = function(app, db, mongoose, passport) {
 
                         var avgRating = "//placehold.it/10x10";
                         if (restaurant.rating_img_url) {
-                            console.log("avg rating present updating");
                             avgRating = restaurant.rating_img_url;
-                            console.log("Vignesh" + avgRating);
                         }
                         var imageUrl = "//placehold.it/100x100";
                         if (restaurant.image_url) {
