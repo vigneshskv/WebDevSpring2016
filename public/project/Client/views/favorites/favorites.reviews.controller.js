@@ -52,6 +52,7 @@
             ClientFavouriteService.GetRestaurantDetailsById(book.id)
                 .then(function(bookObjRes){
                     console.log(bookObjRes);
+
                     $window.sessionStorage.setItem("currentBook",angular.toJson(bookObjRes));
                     $location.url("/restaurantdetail");
                 });

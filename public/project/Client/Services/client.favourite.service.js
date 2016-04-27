@@ -117,6 +117,7 @@
             $http.get("/api/restaurantdetails/" + bookId)
                 .success(function (bookObjRes) {
                     var bookObj = getRestaurantDetails(bookObjRes)
+                    console.log("VIGNESH2 result :"+bookObj);
                     deferred.resolve(bookObj);
                 });
             return deferred.promise;
@@ -128,7 +129,7 @@
             var bookObj = {};
 
             var volumeInfo = {};
-            volumeInfo.title                        = favbook.id;
+            volumeInfo.title                        = favbook.ISBN_13;
 
             var imageLinks = {}
             imageLinks.smallThumbnail               = favbook.thumbnailUrl;
@@ -138,11 +139,19 @@
             volumeInfo.canonicalVolumeLink          = favbook.googlePreviewLink;
             volumeInfo.previewLink                  = favbook.googlePreviewLink;
             //volumeInfo.averageRating                = parseFloat(parseInt(favbook.sentimentRating))/20;
-            volumeInfo.description                  = favbook.description;
+            volumeInfo.snippet_text                  = favbook.description;
             //volumeInfo.id                           = favbook.ISBN_13;
 
             bookObj.volumeInfo = volumeInfo;
             bookObj.id                              = favbook.ISBN_13;
+            bookObj.name                              = favbook.title;
+            bookObj.previewLink                  = favbook.googlePreviewLink;
+            bookObj.snippet_text         = favbook.description;
+            bookObj.image_url = favbook.thumbnailUrl;
+
+
+
+
 
             return bookObj;
         }

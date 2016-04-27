@@ -19,7 +19,7 @@
                     {{model.book.name}}</a>
                 </h3>
             </div>
-            <div class="row text-nowrap">
+            <div ng-show ="model.book.location" class="row text-nowrap">
                 <h5>Contact Information:</h5>
                 <p>{{model.book.location.display_address[0]}}
                     {{model.book.location.display_address[1]}}
@@ -41,11 +41,6 @@
                 </a>
             </div>
         </div>
-
-
-
-
-
 
     </div>
     &nbsp;
