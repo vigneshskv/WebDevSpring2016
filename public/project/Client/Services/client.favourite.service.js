@@ -11,10 +11,10 @@
             addFavRestaurantForUser               : addFavoriteRestaurantForUser,
             RemoveFavRestaurantForCurrentUser     : RemoveFavRestaurantForCurrentUser,
             GetFavRestaurantsForCurrentUser       : GetFavRestaurantsForCurrentUser,
-            submitReview                    : submitReview,
-            getReviewsForRestaurantID           : getReviewsForRestaurantID,
-            GetReviewsByUserId              : GetReviewsByUserId,
-            processReviews                  : processReviews,
+            submitReview                          : submitReview,
+            getReviewsForRestaurantID             : getReviewsForRestaurantID,
+            GetReviewsByUserId                    : GetReviewsByUserId,
+            processReviews                        : processReviews,
             GetRestaurantDetailsById              : GetRestaurantDetailsById
         };
         return service;
@@ -122,7 +122,29 @@
             return deferred.promise;
         }
 
+        function getRestaurantDetails(favbook){
+            console.log(favbook);
+
+            var bookObj = {};
+
+            var volumeInfo = {};
+            volumeInfo.title                        = favbook.id;
+
+            var imageLinks = {}
+            imageLinks.smallThumbnail               = favbook.thumbnailUrl;
 
 
+            volumeInfo.imageLinks                   = imageLinks;
+            volumeInfo.canonicalVolumeLink          = favbook.googlePreviewLink;
+            volumeInfo.previewLink                  = favbook.googlePreviewLink;
+            //volumeInfo.averageRating                = parseFloat(parseInt(favbook.sentimentRating))/20;
+            volumeInfo.description                  = favbook.description;
+            //volumeInfo.id                           = favbook.ISBN_13;
+
+            bookObj.volumeInfo = volumeInfo;
+            bookObj.id                              = favbook.ISBN_13;
+
+            return bookObj;
+        }
     }
 })();

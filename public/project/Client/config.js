@@ -90,13 +90,12 @@
 
 
     var checkUserLoggedIn = function($q, $timeout, $http, $location, $rootScope){
-
         var deferred = $q.defer();
 
         $http.get("/api/loggedin")
             .success(function (user) {
                 $rootScope.errorMessage = null;
-                //USer is Authenticted
+
                 if(user !== '0'){
                     $rootScope.user = user;
                     deferred.resolve();
@@ -110,13 +109,13 @@
         return deferred.promise;
     };
 
+
     var findCurrentUser = function($q, $timeout, $http, $location, $rootScope)    {
         var deferred = $q.defer();
 
         $http.get("/api/loggedin")
             .success(function(user){
                 $rootScope.errorMessage = null;
-                // User is Authenticated
                 if (user !== '0')
                 {
                     $rootScope.user = user;
@@ -125,5 +124,4 @@
             });
             return deferred.promise;
     };
-
 })();

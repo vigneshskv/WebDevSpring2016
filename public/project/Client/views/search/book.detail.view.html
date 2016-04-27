@@ -32,18 +32,7 @@
             <div class="row text-nowrap">
                 <img ng-src={{model.book.rating_img_url}}>
             </div>
-            <!--<div class="row text-nowrap">
-                <div ng-if="model.book.volumeInfo.averageRating > 0" class="progress-bar"
-                     ng-class = "{'progress-bar-success'  : ((model.book.volumeInfo.averageRating >= 3.5) && (model.book.volumeInfo.averageRating < 5)),
-                                      'progress-bar-info'     : ((model.book.volumeInfo.averageRating >= 2.5) && (model.book.volumeInfo.averageRating < 3.5)),
-                                      'progress-bar-warning'  : ((model.book.volumeInfo.averageRating >= 1.5) && (model.book.volumeInfo.averageRating < 2.5)),
-                                      'progress-bar-danger'   : ((model.book.volumeInfo.averageRating >= 0 ) && (model.book.volumeInfo.averageRating < 1.5))}"
-                     role="progressbar"
-                     aria-valuenow="model.book.volumeInfo.averageRating * 20" aria-valuemin="0" aria-valuemax="100"
-                     style="width:{{model.book.volumeInfo.averageRating * 20}}%">
-                    {{model.book.volumeInfo.averageRating * 20}}
-                </div>
-            </div>-->
+
             <div class="row text-nowrap" ng-hide="model.isLogin()">
                 <a class="disabled" ng-click="model.addFav(model.book)"
                    style="pointer-events:{{model.getFavButtonState(model.book)}}">
