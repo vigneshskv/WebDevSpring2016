@@ -6,7 +6,6 @@
 
 
     function HomeController($window, $rootScope, $location){
-
         var model = this;
 
         model.searchQuery       = searchQuery;
@@ -18,10 +17,8 @@
             return true;
         }
 
-        //console.log("Hello from Home controller");
+
         function searchQuery(searchQueryString, searchLocationString){
-            //console.log("func called");
-            //console.log(searchQueryString);
             if(!angular.isUndefined(searchQueryString) && !angular.isUndefined(searchLocationString)){
                 //$rootScope.searchQueryString = searchQueryString;
                 $window.sessionStorage.searchQueryString = searchQueryString;
@@ -30,5 +27,4 @@
             }
         }
     }
-
 })();

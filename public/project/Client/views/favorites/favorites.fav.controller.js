@@ -9,31 +9,31 @@
         var model = this;
 
         model.GetFavBooksForCurrentUser = GetFavBooksForCurrentUser;
-        model.getRestaurantDetails            = getRestaurantDetails;
+        model.getRestaurantDetails      = getRestaurantDetails;
         model.removeFav                 = removeFav;
 
 
         GetFavBooksForCurrentUser();
+
+
         function GetFavBooksForCurrentUser() {
             ClientFavouriteService.GetFavRestaurantsForCurrentUser($rootScope.user._id)
-                .then(function(userFavBooks){
-                        if(userFavBooks != null){
-                            console.log("userFavBooks");
-                            console.log(userFavBooks);
-                            model.favbooks = userFavBooks;
+                .then(function(userFavRestaurants){
+                        if(userFavRestaurants != null){
+                            /*console.log("userFavBooks");
+                            console.log(userFavBooks);*/
+                            model.favrestaurants = userFavRestaurants;
                         }else{
-                            model.favbooks = null;
-                            model.noBookMsg = "You don't have any favorite restaurant yet!";
+                            model.favrestaurants = null;
+                            model.noRestaurantMsg = "You don't have any favorite restaurant yet!";
                         }
                     });
         }
 
 
-        function removeFav(favbook){
-            //console.log("you chose to unfavorite :"+favbook.title);
-            //console.log(favbook);
-            ClientFavouriteService.RemoveFavRestaurantForCurrentUser(favbook.ISBN_13, $rootScope.user._id)
-                .then(function(userFavBooks){
+        function removeFav(favrestaurant){
+            ClientFavouriteService.RemoveFavRestaurantForCurrentUser(favrestaurant.ISBN_13, $rootScope.user._id)
+                .then(function(userFavRestaurants){
                     model.message = "Restaurant successfully removed from favourite list";
                     GetFavBooksForCurrentUser();
                 },
@@ -44,13 +44,13 @@
         }
 
 
-        function getRestaurantDetails(book){
-            console.log(book);
+        function getRestaurantDetails(restaurant){
+            console.log(restaurant);
 
-            ClientFavouriteService.GetRestaurantDetailsById(book.ISBN_13)
+            ClientFavouriteService.GetRestaurantDetailsById(restaurant.ISBN_13)
                 .then(function(bookObjRes){
                     console.log(bookObjRes);
-                    $window.sessionStorage.setItem("currentBook",angular.toJson(bookObjRes));
+                    $window.sessionStorage.setItem("currentRestaurant",angular.toJson(bookObjRes));
                     $location.url("/restaurantdetail");
                 });
         }

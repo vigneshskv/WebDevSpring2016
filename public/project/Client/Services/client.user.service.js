@@ -110,27 +110,5 @@
                 });
             return deferred.promise;
         }
-
-
-        function getBookDetails(favbook){
-            var bookObj = {};
-
-            var volumeInfo = {};
-            volumeInfo.title                        = favbook.title;
-
-            var imageLinks = {}
-            imageLinks.smallThumbnail               = favbook.thumbnailUrl;
-
-            volumeInfo.imageLinks                   = imageLinks;
-            volumeInfo.canonicalVolumeLink          = favbook.googlePreviewLink;
-            volumeInfo.previewLink                  = favbook.googlePreviewLink;
-            volumeInfo.averageRating                = parseFloat(parseInt(favbook.sentimentRating))/20;
-            volumeInfo.description                  = favbook.description;
-
-            bookObj.volumeInfo = volumeInfo;
-            bookObj.id                              = favbook.ISBN_13;
-
-            return bookObj;
-        }
     }
 })();

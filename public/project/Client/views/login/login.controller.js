@@ -10,8 +10,6 @@
         model.login         =   login;
         model.loginPass     =   loginPass;
 
-        console.log("Login ctrlr");
-
         function login(user){
             ClientUserService.findUserByUsernameAndPassword(user)
                 .then(function(userResponse){

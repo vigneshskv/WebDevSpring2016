@@ -77,7 +77,7 @@
                 });
         }
 
-        model.book = JSON.parse($window.sessionStorage.getItem("currentBook"));
+        model.book = JSON.parse($window.sessionStorage.getItem("currentRestaurant"));
         console.log(model.book);
 
         // set model.reviews

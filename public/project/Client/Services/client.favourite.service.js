@@ -19,9 +19,9 @@
         };
         return service;
 
-        function addFavoriteRestaurantForUser(userId,book){
+        function addFavoriteRestaurantForUser(userId,restaurant){
             var deferred = $q.defer();
-            $http.post("/api/restaurantfav/"+userId, book)
+            $http.post("/api/restaurantfav/"+userId, restaurant)
                 .success(function (userFavObj) {
                     deferred.resolve(userFavObj);
                 });
@@ -46,11 +46,11 @@
             return deferred.promise;
         }
 
-        function submitReview(book, user, userReview){
-            var reviewObj = { review    : userReview,
+        function submitReview(restaurant, user, userReview){
+            var reviewObj = {
+                review    : userReview,
                 username  : user.username,
-                //centScore : centScore,
-                bookObj   : book };
+                restaurantObj   : restaurant };
             var deferred = $q.defer();
             $http.post("/api/restaurantReview/"+ user._id, reviewObj)
                 .success(function (reviewRes){
@@ -62,8 +62,8 @@
         function getReviewsForRestaurantID(restaurantID){
             var deferred = $q.defer();
             $http.get("/api/restaurantreviews/"+restaurantID)
-                .success(function(bookReviews){
-                    deferred.resolve(bookReviews);
+                .success(function(restaurantReviews){
+                    deferred.resolve(restaurantReviews);
                 });
             return deferred.promise;
         }
@@ -112,48 +112,29 @@
             return restuarantsReview;
         }
 
-        function GetRestaurantDetailsById(bookId) {
+        function GetRestaurantDetailsById(restaurantObjId) {
             var deferred = $q.defer();
-            $http.get("/api/restaurantdetails/" + bookId)
-                .success(function (bookObjRes) {
-                    var bookObj = getRestaurantDetails(bookObjRes)
-                    console.log("VIGNESH2 result :"+bookObj);
-                    deferred.resolve(bookObj);
+            $http.get("/api/restaurantdetails/" + restaurantObjId)
+                .success(function (restaurantObjObjRes) {
+                    var restaurantObj = getRestaurantDetails(restaurantObjObjRes)
+
+                    deferred.resolve(restaurantObj);
                 });
             return deferred.promise;
         }
 
-        function getRestaurantDetails(favbook){
-            console.log(favbook);
+        function getRestaurantDetails(favrestaurant){
+            //console.log(favrestaurant);
 
-            var bookObj = {};
+            var restaurantObj = {};
 
-            var volumeInfo = {};
-            volumeInfo.title                        = favbook.ISBN_13;
+            restaurantObj.id                              = favrestaurant.ISBN_13;
+            restaurantObj.name                              = favrestaurant.title;
+            restaurantObj.previewLink                  = favrestaurant.googlePreviewLink;
+            restaurantObj.snippet_text         = favrestaurant.description;
+            restaurantObj.image_url = favrestaurant.thumbnailUrl;
 
-            var imageLinks = {}
-            imageLinks.smallThumbnail               = favbook.thumbnailUrl;
-
-
-            volumeInfo.imageLinks                   = imageLinks;
-            volumeInfo.canonicalVolumeLink          = favbook.googlePreviewLink;
-            volumeInfo.previewLink                  = favbook.googlePreviewLink;
-            //volumeInfo.averageRating                = parseFloat(parseInt(favbook.sentimentRating))/20;
-            volumeInfo.snippet_text                  = favbook.description;
-            //volumeInfo.id                           = favbook.ISBN_13;
-
-            bookObj.volumeInfo = volumeInfo;
-            bookObj.id                              = favbook.ISBN_13;
-            bookObj.name                              = favbook.title;
-            bookObj.previewLink                  = favbook.googlePreviewLink;
-            bookObj.snippet_text         = favbook.description;
-            bookObj.image_url = favbook.thumbnailUrl;
-
-
-
-
-
-            return bookObj;
+            return restaurantObj;
         }
     }
 })();

@@ -10,50 +10,41 @@
 
         model.GetReviewsByCurrentUser = GetReviewsByCurrentUser;
         model.isCurrentUser           = isCurrentUser;
-        model.getBookDetails          = getBookDetails;
+        model.getRestaurantDetails          = getRestaurantDetails;
 
 
         GetReviewsByCurrentUser($rootScope.user._id);
         function GetReviewsByCurrentUser(userId) {
-            //console.log("Fetching Reviews by User :" + $rootScope.user.username);
-
             ClientFavouriteService.GetReviewsByUserId(userId)
                 .then(function(userRevBooks){
-                    console.log("======userRevBooks=====");
-                    console.log(userRevBooks);
                     if(userRevBooks != null){
                             renderReviews(userRevBooks);
                     }else{
-                        model.noBookMsg = "You have not reviewed restaurants yet!";
+                        model.noRestaurantMsg = "You have not reviewed restaurants yet!";
                     }
                 });
         }
 
         function isCurrentUser(username){
-            if($rootScope.user) {
-                if ($rootScope.user.username == username) {
+            if($rootScope.user)
+                if ($rootScope.user.username == username)
                     return true;
-                }
-            }
+
             return false;
         }
 
         function renderReviews(userReviews){
-            console.log(userReviews);
-            model.reviewBooks = userReviews;
+            //console.log(userReviews);
+            model.reviewRestaurants = userReviews;
         }
 
 
-        function getBookDetails(book){
-            //console.log(favbook);
-
+        function getRestaurantDetails(book){
             var bookObj;
-            //console.log(book);
             ClientFavouriteService.GetRestaurantDetailsById(book.id)
                 .then(function(bookObjRes){
-                    console.log(bookObjRes);
 
-                    $window.sessionStorage.setItem("currentBook",angular.toJson(bookObjRes));
+                    $window.sessionStorage.setItem("currentRestaurant",angular.toJson(bookObjRes));
                     $location.url("/restaurantdetail");
                 });
         }

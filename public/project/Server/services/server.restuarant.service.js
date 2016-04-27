@@ -9,7 +9,7 @@ module.exports = function(app, model, mongoose, passport) {
     app.post("/api/restaurantReview/:userId", submitReview);
     app.get("/api/restaurantreviews/:restaurantID", getReviewsForRestaurantID);
     app.get("/api/userReviews/:userId", GetReviewsByUserId);
-    app.get("/api/restaurantdetails/:bookId", GetRestaurantObjectById);
+    app.get("/api/restaurantdetails/:restaurantId", GetRestaurantObjectById);
 
 
     function addFavRestaurantForUser(req, res) {
@@ -56,7 +56,7 @@ module.exports = function(app, model, mongoose, passport) {
     }
 
     function GetRestaurantObjectById(req, res) {
-        model.GetRestaurantObjectById(req.params.bookId)
+        model.GetRestaurantObjectById(req.params.restaurantId)
             .then(function (bookObj) {
                 res.json(bookObj);
             });

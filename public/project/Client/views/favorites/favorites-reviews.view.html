@@ -6,22 +6,22 @@
     <br/>
 
     <div class="table">
-        <h1>{{model.noBookMsg}}</h1>
-        <div ng-repeat="reviewBook in model.reviewBooks">
+        <h1>{{model.noRestaurantMsg}}</h1>
+        <div ng-repeat="reviewRestaurant in model.reviewRestaurants">
             <div class="row">
                 <div class ="col-md-2">
-                    <img class="img" width="100px" ng-src={{reviewBook.thumbnailUrl}}>
+                    <img class="img" width="100px" ng-src={{reviewRestaurant.thumbnailUrl}}>
                 </div>
                 <div class ="col-md-5 col-xs-4 text-nowrap">
                     <div class="row">
-                        <h3 ><a href="" ng-click="model.getBookDetails(reviewBook)">
-                            {{reviewBook.title}}
+                        <h3 ><a href="" ng-click="model.getRestaurantDetails(reviewRestaurant)">
+                            {{reviewRestaurant.title}}
                         </a></h3>
                     </div>
                     <br/>
                     &nbsp;
                     <div class="row">
-                        <a ng-href={{reviewBook.googlePreviewLink}} target="_blank">Preview on Yelp</a>
+                        <a ng-href={{reviewRestaurant.googlePreviewLink}} target="_blank">Preview on Yelp</a>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <h4><span style="text-decoration: underline;">Reviews:</span></h4>
                 </div>
             </div>
-            <div ng-repeat="review in reviewBook.reviews">
+            <div ng-repeat="review in reviewRestaurant.reviews">
                 <div class="row">
                     <div class="col-md-3 text-justify" ng-if= "model.isCurrentUser(review.username)">
                         <h4 >You wrote:</h4>

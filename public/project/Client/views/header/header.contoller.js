@@ -16,18 +16,14 @@
 
         function registerShow(){
             if($rootScope.user) {
-                if ($rootScope.user != null) {
+                if ($rootScope.user != null)
                     return true;
-                }
             }
             else { return false; }
         }
 
 
         function isLogin(){
-            //console.log("checking if user is logged in");
-            //console.log($rootScope.user);
-
             if ($rootScope.user == null) {
                 return true;
             }
@@ -61,5 +57,4 @@
                 });
         }
     }
-
 })();

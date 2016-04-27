@@ -342,7 +342,7 @@ module.exports = function(app, db, mongoose, passport) {
     function SubmitReview(userId, reviewObj) {
         var deferred = q.defer();
         uaRestaurantReviewModel.create({
-                bookId: reviewObj.bookObj.id,
+                bookId: reviewObj.restaurantObj.id,
                 userId: userId,
                 username: reviewObj.username,
                 reviewDesc: reviewObj.review,
@@ -353,8 +353,8 @@ module.exports = function(app, db, mongoose, passport) {
                     deferred.reject(err);
                 }
                 else {
-                    reviewObj.bookObj.centScore = reviewObj.centScore;
-                    StoreRestaurantDetails(reviewObj.bookObj, 1);
+                    reviewObj.restaurantObj.centScore = reviewObj.centScore;
+                    StoreRestaurantDetails(reviewObj.restaurantObj, 1);
                     deferred.resolve(result);
                 }
             });

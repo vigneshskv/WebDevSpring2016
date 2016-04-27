@@ -4,35 +4,35 @@
         <li role="presentation" class=active><a href="#/favorite_books">Favorites</a></li>
     </ul>
     <br/>
-    <h1>{{model.noBookMsg}}</h1>
+    <h1>{{model.noRestaurantMsg}}</h1>
 
 
     <div ng-show="model.message" class="alert alert-success" role="alert">{{model.message}}</div>
     <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
 
 
-    <div ng-repeat="favbook in model.favbooks">
+    <div ng-repeat="favrestaurant in model.favrestaurants">
         <div class="row">
             <div class ="col-md-2">
-                <img class="img" width="100px" ng-src={{favbook.thumbnailUrl}}>
+                <img class="img" width="100px" ng-src={{favrestaurant.thumbnailUrl}}>
             </div>
             <div class ="col-md-5 col-xs-4 text-nowrap">
                     <div class="row">
-                        <h3><a href="" ng-click="model.getRestaurantDetails(favbook)">
-                            {{favbook.ISBN_13}}
+                        <h3><a href="" ng-click="model.getRestaurantDetails(favrestaurant)">
+                            {{favrestaurant.ISBN_13}}
                         </a></h3>
                     </div>
                     <br/>
 
                     <div class="row text-nowrap" ng-hide="model.isLogin()">
-                        <a class="disabled" ng-click="model.removeFav(favbook)">
+                        <a class="disabled" ng-click="model.removeFav(favrestaurant)">
                                 <span style="color:orangered" class="glyphicon glyphicon-thumbs-down"></span>
                         </a>
                     </div>
 
                     &nbsp;
                     <div class="row">
-                        <a target="_blank" ng-href={{favbook.googlePreviewLink}}>Preview on Yelp</a>
+                        <a target="_blank" ng-href={{favrestaurant.googlePreviewLink}}>Preview on Yelp</a>
                     </div>
             </div>
         </div>
