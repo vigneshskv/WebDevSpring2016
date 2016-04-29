@@ -26,8 +26,10 @@
             }else {
                 ClientUserService.LoginUser(user)
                     .then(function (userResponse) {
-                        //console.log(userResponse);
+                        console.log(userResponse);
                         userLoginCallback(userResponse);
+                    },function(err){
+                        model.error = "Cannot login";
                     });
             }
         }

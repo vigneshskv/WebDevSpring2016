@@ -46,10 +46,10 @@
                 .success(function (userResponse) {
                     deferred.resolve(userResponse);
                 })
-            .error(function (err){
-                console.log(err);
-                deferred.reject(err);
-            });
+                .error(function (err){
+                    console.log(err);
+                    deferred.reject(err);
+                });
             return deferred.promise;
         }
 
@@ -97,7 +97,11 @@
             $http.post("/api/login",user)
                 .success(function (userObj){
                     deferred.resolve(userObj);
+                })
+                .error(function(err){
+                    deferred.reject(err);
                 });
+
             return deferred.promise;
         }
 
