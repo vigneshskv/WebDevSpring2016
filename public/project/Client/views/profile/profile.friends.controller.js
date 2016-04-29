@@ -130,7 +130,5 @@
                     renderFriendsFollowers();
                 });
         }
-
     }
-
 })();

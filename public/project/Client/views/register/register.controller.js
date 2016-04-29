@@ -65,7 +65,7 @@
                     .then(
                         function (userResult) {
                             if (userResult) {
-                                console.log("username already present,returning");
+                                //console.log("username already present,returning");
                                 registrationPossible = false;
                                 model.message = "Username already exists, please choose a different username";
                                 return;
@@ -74,7 +74,7 @@
                                 ClientUserService.createUser(user)
                                     .then(function (retuser) {
                                         if (retuser != null) {
-                                            console.log(retuser.user);
+                                            //console.log(retuser.user);
                                             registerCallback(retuser.user);
                                         }
                                         else {
@@ -84,7 +84,7 @@
                                     })
                             }
                         },function(err){
-                            console.log(err);
+                            //console.log(err);
                         }
                     );
             }
@@ -93,8 +93,8 @@
 
         function registerCallback(user){
             $rootScope.user = user;
-            console.log("user obj from reg contr");
-            console.log($rootScope.user);
+            /*console.log("user obj from reg contr");
+            console.log($rootScope.user);*/
             ClientUserService.LoginUser(user)
                 .then(function(user){
                     $rootScope.user = user;

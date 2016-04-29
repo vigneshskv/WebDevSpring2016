@@ -10,7 +10,7 @@
 
         model.GetReviewsByCurrentUser = GetReviewsByCurrentUser;
         model.isCurrentUser           = isCurrentUser;
-        model.getRestaurantDetails          = getRestaurantDetails;
+        model.getRestaurantDetails    = getRestaurantDetails;
 
 
         GetReviewsByCurrentUser($rootScope.user._id);

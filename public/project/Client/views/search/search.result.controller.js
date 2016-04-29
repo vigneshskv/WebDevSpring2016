@@ -114,7 +114,7 @@
         }
 
         function addFav(restaurant){
-            console.log(restaurant);
+            //console.log(restaurant);
             ClientFavouriteService.addFavRestaurantForUser($rootScope.user._id,restaurant)
                 .then(function (favAddResult){
                     if(favAddResult != null) {

@@ -35,9 +35,9 @@
         }
 
         function renderReviews(userReviews){
-            console.log(userReviews);
+            //console.log(userReviews);
             model.reviewBooks = userReviews;
-            console.log(model.reviewBooks);
+            //console.log(model.reviewBooks);
         }
     }
 })();

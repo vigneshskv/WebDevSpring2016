@@ -20,8 +20,6 @@
             ClientFavouriteService.GetFavRestaurantsForCurrentUser($rootScope.user._id)
                 .then(function(userFavRestaurants){
                         if(userFavRestaurants != null){
-                            /*console.log("userFavBooks");
-                            console.log(userFavBooks);*/
                             model.favrestaurants = userFavRestaurants;
                         }else{
                             model.favrestaurants = null;

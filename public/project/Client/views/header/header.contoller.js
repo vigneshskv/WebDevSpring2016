@@ -7,11 +7,11 @@
 
     function HeaderController($location, $rootScope, ClientUserService){
         var model = this;
-        model.registerShow = registerShow;
-        model.isLogin = isLogin;
-        model.loginShow = loginShow;
-        model.logoutShow = logoutShow;
-        model.logoutUser = logoutUser;
+        model.registerShow  = registerShow;
+        model.isLogin       = isLogin;
+        model.loginShow     = loginShow;
+        model.logoutShow    = logoutShow;
+        model.logoutUser    = logoutUser;
 
 
         function registerShow(){
